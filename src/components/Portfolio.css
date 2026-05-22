@@ -1,0 +1,118 @@
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.portfolio-card {
+  padding: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(178, 36, 239, 0.15);
+  border-color: rgba(178, 36, 239, 0.3);
+}
+
+.portfolio-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 1.5rem;
+  position: relative;
+}
+
+.portfolio-client-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.client-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.client-placeholder {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-blue);
+}
+
+.portfolio-title-wrapper {
+  flex: 1;
+}
+
+.portfolio-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.portfolio-client {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.portfolio-link-icon {
+  color: var(--text-secondary);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.portfolio-card:hover .portfolio-link-icon {
+  color: var(--accent-cyan);
+  transform: translate(3px, -3px);
+}
+
+.portfolio-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  flex: 1;
+}
+
+.portfolio-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 0.95rem;
+  color: #E2E8F0;
+  line-height: 1.6;
+}
+
+.portfolio-stat.impact {
+  margin-top: auto;
+  padding-top: 1rem;
+  background: rgba(178, 36, 239, 0.05);
+  border-radius: 8px;
+  padding: 1rem;
+  border-left: 3px solid var(--accent-purple);
+}
+
+.stat-value.highlight {
+  color: #fff;
+  font-weight: 500;
+}
