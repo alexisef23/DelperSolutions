@@ -4,44 +4,8 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding-top: 2rem;
+  padding-top: 6.5rem;
   text-align: center;
-}
-
-.hero-icon-wrapper {
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: center;
-}
-
-.geometric-icon {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--accent-cyan);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Space Mono', monospace;
-  font-weight: bold;
-  font-size: 24px;
-  box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
-}
-
-.letter-d { color: var(--text-primary); }
-.letter-p { color: var(--accent-cyan); margin-left: -5px; }
-
-.tech-node {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  width: 12px;
-  height: 12px;
-  background: var(--accent-purple);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-purple);
 }
 
 .hero-title {
@@ -71,25 +35,533 @@
   margin-left: 0.5rem;
 }
 
+/* ======================================
+   HERO VISUAL WRAPPER
+   ====================================== */
 .hero-visual {
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  perspective: 1000px;
+  max-width: 860px;
+  margin: 2rem auto 0 auto;
 }
 
-.hero-image {
+.hero-visual-inner {
+  position: relative;
   width: 100%;
-  height: auto;
-  border-radius: 20px;
-  transform: rotateX(5deg);
-  transition: transform 0.5s ease;
-  object-fit: cover;
-  max-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.hero-image:hover {
-  transform: rotateX(0deg);
+.hero-glow-back {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, rgba(178, 36, 239, 0.1) 50%, transparent 100%);
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ======================================
+   ECOSYSTEM CONTAINER
+   ====================================== */
+.hero-ecosystem {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  flex-shrink: 0;
+}
+
+/* Orbit rings */
+.eco-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 242, 254, 0.12);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.eco-orbit-1 {
+  width: 300px;
+  height: 300px;
+  animation: orbit-spin 25s linear infinite;
+}
+.eco-orbit-2 {
+  width: 440px;
+  height: 440px;
+  border-color: rgba(178, 36, 239, 0.1);
+  animation: orbit-spin 40s linear infinite reverse;
+}
+
+@keyframes orbit-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ======================================
+   CENTER HUB
+   ====================================== */
+.eco-center-hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.eco-hub-inner {
+  width: 64px;
+  height: 64px;
+  background: rgba(11, 15, 25, 0.95);
+  border: 2px solid var(--accent-cyan);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.35), 0 0 60px rgba(0, 242, 254, 0.1);
+}
+
+.eco-hub-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.3));
+  transition: filter 2.3s ease;
+}
+
+.eco-hub-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  border: 2px solid var(--accent-cyan);
+  animation: hub-pulse 2.5s ease-out infinite;
+}
+@keyframes hub-pulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+}
+
+/* ======================================
+   FLOATING CARDS SHARED
+   ====================================== */
+.eco-card {
+  position: absolute;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 5;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.eco-card-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.6rem;
+  background: rgba(22, 27, 44, 0.95);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.eco-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.eco-dot-r  { background: #ff5f56; }
+.eco-dot-y  { background: #ffbd2e; }
+.eco-dot-g  { background: #27c93f; }
+
+.eco-card-url {
+  font-family: 'Space Mono', monospace;
+  font-size: 6px;
+  color: var(--text-secondary);
+  background: rgba(0,0,0,0.25);
+  padding: 0.1rem 0.6rem;
+  border-radius: 3px;
+  margin-left: 0.3rem;
+}
+
+.eco-card-body {
+  padding: 0.6rem;
+  background: rgba(10, 13, 22, 0.92);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+/* Shared utility lines */
+.eco-line {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+}
+.eco-line.long   { width: 90%; }
+.eco-line.medium { width: 65%; }
+.eco-line.short  { width: 40%; }
+.eco-line.cyan   { background: rgba(0, 242, 254, 0.35); }
+.eco-line.purple { background: rgba(178, 36, 239, 0.35); }
+
+/* ======================================
+   CARD POSITIONS & ANIMATIONS
+   ====================================== */
+
+/* Card 1 - Browser / Web App — top left */
+.eco-card-1 {
+  width: 150px;
+  top: 18px;
+  left: 22px;
+  animation: float-a 7s ease-in-out infinite;
+}
+/* Card 2 - Mobile iOS — top right */
+.eco-card-2 {
+  width: 78px;
+  height: 120px;
+  top: 12px;
+  right: 35px;
+  animation: float-b 6s ease-in-out infinite 1s;
+}
+/* Card 3 - Dashboard — right middle */
+.eco-card-3 {
+  width: 140px;
+  right: 14px;
+  top: 160px;
+  animation: float-a 8s ease-in-out infinite 2s;
+}
+/* Card 4 - Code Editor — left middle */
+.eco-card-4 {
+  width: 140px;
+  left: 14px;
+  top: 160px;
+  animation: float-b 7.5s ease-in-out infinite 0.5s;
+}
+/* Card 5 - Mobile Android — bottom left */
+.eco-card-5 {
+  width: 78px;
+  height: 120px;
+  bottom: 18px;
+  left: 40px;
+  animation: float-a 9s ease-in-out infinite 1.5s;
+}
+/* Card 6 - API Status — bottom right */
+.eco-card-6 {
+  width: 130px;
+  bottom: 18px;
+  right: 28px;
+  animation: float-b 6.5s ease-in-out infinite 0.8s;
+}
+
+@keyframes float-a {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(10px); }
+}
+
+/* ======================================
+   CARD 1 — Browser Web App
+   ====================================== */
+.eco-blocks-row {
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.2rem;
+}
+.eco-block {
+  height: 18px;
+  flex: 1;
+  border-radius: 4px;
+}
+.eco-block.cyan   { background: rgba(0, 242, 254, 0.2); border: 1px solid rgba(0, 242, 254, 0.3); }
+.eco-block.purple { background: rgba(178, 36, 239, 0.2); border: 1px solid rgba(178, 36, 239, 0.3); }
+.eco-block.blue   { background: rgba(79, 172, 254, 0.2); border: 1px solid rgba(79, 172, 254, 0.3); }
+
+.eco-mini-chart {
+  width: 100%;
+  height: 20px;
+}
+.eco-mini-chart svg { width: 100%; height: 100%; }
+
+/* ======================================
+   CARD 2 & 5 — Mobile Frames
+   ====================================== */
+.eco-mobile {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+.eco-mobile-notch {
+  width: 30px;
+  height: 5px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 3px;
+  margin: 5px auto 2px auto;
+  flex-shrink: 0;
+}
+.eco-mobile-body {
+  flex: 1;
+  overflow: hidden;
+}
+.eco-mobile-bar {
+  width: 30px;
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  margin: 5px auto 4px auto;
+  flex-shrink: 0;
+}
+.eco-mobile-btn {
+  height: 18px;
+  border-radius: 5px;
+  margin-top: 0.3rem;
+}
+.eco-mobile-btn.cyan   { background: rgba(0, 242, 254, 0.3); border: 1px solid rgba(0, 242, 254, 0.5); }
+.eco-mobile-btn.purple { background: rgba(178, 36, 239, 0.3); border: 1px solid rgba(178, 36, 239, 0.5); }
+
+.eco-app-icon-row {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.35rem;
+}
+.eco-app-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+.eco-app-icon.cyan   { background: rgba(0, 242, 254, 0.3); }
+.eco-app-icon.purple { background: rgba(178, 36, 239, 0.3); }
+.eco-app-icon.blue   { background: rgba(79, 172, 254, 0.3); }
+
+.eco-chat-bubbles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+.eco-bubble {
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.1);
+  width: 80%;
+}
+.eco-bubble.sent   { align-self: flex-end; width: 65%; }
+.eco-bubble.cyan   { background: rgba(0, 242, 254, 0.25); }
+.eco-bubble.small  { width: 50%; }
+
+/* ======================================
+   CARD 3 — Dashboard
+   ====================================== */
+.eco-kpi-row {
+  display: flex;
+  gap: 0.4rem;
+}
+.eco-kpi {
+  flex: 1;
+  border-radius: 5px;
+  padding: 0.3rem 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eco-kpi span {
+  font-size: 8px;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+}
+.eco-kpi.purple { background: rgba(178, 36, 239, 0.2); border: 1px solid rgba(178, 36, 239, 0.3); color: #b224ef; }
+.eco-kpi.cyan   { background: rgba(0, 242, 254, 0.2); border: 1px solid rgba(0, 242, 254, 0.3); color: #00f2fe; }
+
+.eco-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.3rem;
+  height: 40px;
+  margin-top: 0.3rem;
+}
+.eco-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(to top, var(--accent-cyan), rgba(0, 242, 254, 0.3));
+}
+.eco-bar:nth-child(even) {
+  background: linear-gradient(to top, var(--accent-purple), rgba(178, 36, 239, 0.3));
+}
+
+/* ======================================
+   CARD 4 — Code Editor
+   ====================================== */
+.eco-code-bar {
+  background: rgba(15, 18, 30, 0.98);
+  padding: 0.35rem 0.6rem;
+}
+.eco-code-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  color: var(--accent-cyan);
+}
+.eco-code-body {
+  background: rgba(8, 10, 18, 0.98);
+  padding: 0.5rem 0.6rem;
+  gap: 0.3rem;
+}
+.eco-code-line {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.cl-purple { color: #c792ea; }
+.cl-blue   { color: #82aaff; }
+.cl-cyan   { color: #89ddff; }
+.cl-white  { color: #d4d4d4; }
+.cl-yellow { color: #ffcb6b; }
+.cl-green  { color: #4fc1ff; opacity: 0.6; }
+
+.eco-cursor {
+  width: 6px;
+  height: 10px;
+  background: var(--accent-cyan);
+  border-radius: 1px;
+  animation: blink 1s step-end infinite;
+  margin-top: 0.2rem;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ======================================
+   CARD 6 — API Status
+   ====================================== */
+.eco-status {
+  padding: 0.6rem 0.75rem;
+  background: rgba(10, 13, 22, 0.92);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.eco-status-title {
+  font-size: 7px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+}
+.eco-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 8px;
+  color: var(--text-primary);
+  font-family: 'Space Mono', monospace;
+}
+.eco-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.eco-status-dot.green { background: #27c93f; box-shadow: 0 0 6px #27c93f; }
+.eco-status-dot.cyan  { background: var(--accent-cyan); box-shadow: 0 0 6px var(--accent-cyan); }
+.eco-status-dot.anim  { animation: status-pulse 1.5s ease-in-out infinite; }
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ======================================
+   SVG CONNECTIONS
+   ====================================== */
+.eco-connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.eco-conn-line {
+  stroke: rgba(0, 242, 254, 0.12);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+/* ======================================
+   FLOATING BADGES
+   ====================================== */
+.hero-floating-badge {
+  position: absolute;
+  padding: 0.75rem 1.25rem;
+  background: rgba(11, 15, 25, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.badge-1 {
+  top: 15%;
+  left: -20px;
+  animation: float-badge-1 6s ease-in-out infinite;
+}
+
+.badge-2 {
+  bottom: 15%;
+  right: -20px;
+  animation: float-badge-2 6s ease-in-out infinite 3s;
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+}
+
+.badge-dot.purple {
+  background-color: var(--accent-purple);
+  box-shadow: 0 0 8px var(--accent-purple);
+}
+
+@keyframes float-badge-1 {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes float-badge-2 {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(10px); }
+}
+
+/* ======================================
+   RESPONSIVE
+   ====================================== */
+@media (max-width: 992px) {
+  .hero-floating-badge { display: none; }
+  .hero-ecosystem {
+    width: 360px;
+    height: 360px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -99,7 +571,197 @@
   .hero-actions {
     flex-direction: column;
   }
+  .hero-ecosystem {
+    width: 300px;
+    height: 300px;
+  }
+  .eco-card-1, .eco-card-3, .eco-card-4 { display: none; }
 }
 
-.hero-logo-wrapper { margin-bottom: 2rem; display: flex; justify-content: center; }
-.hero-company-logo { max-width: 250px; height: auto; object-fit: contain; filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.3)); }
+/* ======================================
+   LIGHT MODE OVERRIDES
+   ====================================== */
+:root[data-theme="light"] .hero-glow-back {
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.1) 0%, rgba(109, 40, 217, 0.06) 50%, transparent 100%);
+  filter: blur(70px);
+}
+
+/* Orbit rings */
+:root[data-theme="light"] .eco-orbit {
+  border-color: rgba(2, 132, 199, 0.18);
+}
+:root[data-theme="light"] .eco-orbit-2 {
+  border-color: rgba(109, 40, 217, 0.14);
+}
+
+/* Center Hub */
+:root[data-theme="light"] .eco-hub-inner {
+  background: #ffffff;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(2, 132, 199, 0.2), 0 4px 20px rgba(15, 23, 42, 0.08);
+}
+:root[data-theme="light"] .eco-hub-logo {
+  filter: drop-shadow(0 0 8px rgba(2, 132, 199, 0.25));
+}
+:root[data-theme="light"] .eco-hub-pulse {
+  border-color: var(--accent-cyan);
+}
+
+/* Cards base */
+:root[data-theme="light"] .eco-card {
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.1), 0 2px 8px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+/* Card bar (browser header) */
+:root[data-theme="light"] .eco-card-bar {
+  background: #f1f5f9;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+:root[data-theme="light"] .eco-card-url {
+  color: #475569;
+  background: rgba(15, 23, 42, 0.06);
+}
+
+/* Card body */
+:root[data-theme="light"] .eco-card-body {
+  background: #ffffff;
+}
+
+/* Utility lines */
+:root[data-theme="light"] .eco-line {
+  background: rgba(15, 23, 42, 0.1);
+}
+:root[data-theme="light"] .eco-line.cyan {
+  background: rgba(2, 132, 199, 0.3);
+}
+:root[data-theme="light"] .eco-line.purple {
+  background: rgba(109, 40, 217, 0.25);
+}
+
+/* Blocks */
+:root[data-theme="light"] .eco-block.cyan {
+  background: rgba(2, 132, 199, 0.12);
+  border-color: rgba(2, 132, 199, 0.25);
+}
+:root[data-theme="light"] .eco-block.purple {
+  background: rgba(109, 40, 217, 0.12);
+  border-color: rgba(109, 40, 217, 0.25);
+}
+:root[data-theme="light"] .eco-block.blue {
+  background: rgba(29, 78, 216, 0.12);
+  border-color: rgba(29, 78, 216, 0.25);
+}
+
+/* Mobile frames */
+:root[data-theme="light"] .eco-mobile {
+  border-color: rgba(15, 23, 42, 0.12) !important;
+  background: #ffffff;
+}
+:root[data-theme="light"] .eco-mobile-notch {
+  background: rgba(15, 23, 42, 0.12);
+}
+:root[data-theme="light"] .eco-mobile-bar {
+  background: rgba(15, 23, 42, 0.15);
+}
+:root[data-theme="light"] .eco-mobile-btn.cyan {
+  background: rgba(2, 132, 199, 0.15);
+  border-color: rgba(2, 132, 199, 0.35);
+}
+:root[data-theme="light"] .eco-mobile-btn.purple {
+  background: rgba(109, 40, 217, 0.15);
+  border-color: rgba(109, 40, 217, 0.35);
+}
+
+/* App icons */
+:root[data-theme="light"] .eco-app-icon.cyan {
+  background: rgba(2, 132, 199, 0.2);
+}
+:root[data-theme="light"] .eco-app-icon.purple {
+  background: rgba(109, 40, 217, 0.2);
+}
+:root[data-theme="light"] .eco-app-icon.blue {
+  background: rgba(29, 78, 216, 0.2);
+}
+
+/* Chat bubbles */
+:root[data-theme="light"] .eco-bubble {
+  background: rgba(15, 23, 42, 0.08);
+}
+:root[data-theme="light"] .eco-bubble.cyan {
+  background: rgba(2, 132, 199, 0.18);
+}
+
+/* Dashboard KPIs */
+:root[data-theme="light"] .eco-kpi.purple {
+  background: rgba(109, 40, 217, 0.1);
+  border-color: rgba(109, 40, 217, 0.22);
+  color: #6d28d9;
+}
+:root[data-theme="light"] .eco-kpi.cyan {
+  background: rgba(2, 132, 199, 0.1);
+  border-color: rgba(2, 132, 199, 0.22);
+  color: #0284c7;
+}
+
+/* Bar chart */
+:root[data-theme="light"] .eco-bar {
+  background: linear-gradient(to top, var(--accent-cyan), rgba(2, 132, 199, 0.25));
+}
+:root[data-theme="light"] .eco-bar:nth-child(even) {
+  background: linear-gradient(to top, var(--accent-purple), rgba(109, 40, 217, 0.25));
+}
+
+/* Code Editor */
+:root[data-theme="light"] .eco-code-bar {
+  background: #f1f5f9;
+}
+:root[data-theme="light"] .eco-code-body {
+  background: #fafbfd;
+}
+:root[data-theme="light"] .eco-code-title {
+  color: var(--accent-cyan);
+}
+:root[data-theme="light"] .cl-purple { color: #7c3aed; }
+:root[data-theme="light"] .cl-blue   { color: #2563eb; }
+:root[data-theme="light"] .cl-cyan   { color: #0284c7; }
+:root[data-theme="light"] .cl-white  { color: #334155; }
+:root[data-theme="light"] .cl-yellow { color: #b45309; }
+:root[data-theme="light"] .cl-green  { color: #059669; opacity: 0.8; }
+
+:root[data-theme="light"] .eco-cursor {
+  background: var(--accent-cyan);
+}
+
+/* API Status Card */
+:root[data-theme="light"] .eco-status {
+  background: #ffffff;
+}
+:root[data-theme="light"] .eco-status-title {
+  color: #64748b;
+}
+:root[data-theme="light"] .eco-status-row {
+  color: var(--text-primary);
+}
+:root[data-theme="light"] .eco-status-dot.green {
+  background: #16a34a;
+  box-shadow: 0 0 6px rgba(22, 163, 74, 0.5);
+}
+:root[data-theme="light"] .eco-status-dot.cyan {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 6px rgba(2, 132, 199, 0.5);
+}
+
+/* SVG connection lines */
+:root[data-theme="light"] .eco-conn-line {
+  stroke: rgba(2, 132, 199, 0.15);
+}
+
+/* Floating badges */
+:root[data-theme="light"] .hero-floating-badge {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  color: var(--text-primary);
+}
+

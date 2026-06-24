@@ -1,30 +1,210 @@
 .navbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 1.5rem 0;
-  z-index: 100;
+  position: fixed;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2.5rem);
+  max-width: 1200px;
+  padding: 0.6rem 2rem;
+  z-index: 1000;
+  background: rgba(11, 15, 25, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid var(--glass-border);
+  border-radius: 100px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
 }
 
 .navbar-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between; /* Distribute brand, menu, and switcher */
   align-items: center;
+  width: 100%;
 }
 
 .navbar-brand {
   display: inline-flex;
   align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.navbar-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  transition: color 2.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navbar-logo {
-  height: 40px;
+  height: 32px; /* Slimmer logo for compact navbar */
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
 }
 
-.navbar-logo:hover {
+.navbar-brand:hover .navbar-logo {
   transform: scale(1.05);
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar-link {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color 2.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-gradient);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: var(--text-primary);
+}
+
+.navbar-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 1.5rem;
+  }
+  .navbar-menu {
+    gap: 1.25rem;
+  }
+  .navbar-link {
+    font-size: 0.85rem;
+  }
+  .navbar-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-menu {
+    display: none; /* Hide menu on smaller mobile phones */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-title {
+    display: none; /* Hide brand text on extra small devices */
+  }
+}
+
+/* Theme Toggle Button Capsule styles */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border-radius: 50%;
+}
+
+.theme-toggle-slider {
+  position: relative;
+  width: 60px;
+  height: 32px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  transition: background 2.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 2.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-theme="light"] .theme-toggle-slider {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.icon-sun {
+  z-index: 2;
+  transition: opacity 0.5s ease, transform 0.5s ease, color 0.5s ease;
+}
+
+.icon-moon {
+  z-index: 2;
+  transition: opacity 0.5s ease, transform 0.5s ease, color 0.5s ease;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1;
+}
+
+/* Light state transitions (Active = Sun (Left), Inactive = Moon (Right)) */
+.theme-toggle-slider.light .toggle-thumb {
+  transform: translateX(0); /* Thumb under Sun */
+}
+
+.theme-toggle-slider.light .icon-sun {
+  color: #ffffff; /* High contrast white on gradient thumb */
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.theme-toggle-slider.light .icon-moon {
+  color: #1d4ed8; /* Visible dark-blue inactive icon on light background */
+  opacity: 0.6;
+  transform: scale(0.85);
+}
+
+/* Dark state transitions (Active = Moon (Right), Inactive = Sun (Left)) */
+.theme-toggle-slider.dark .toggle-thumb {
+  transform: translateX(28px); /* Thumb under Moon */
+}
+
+.theme-toggle-slider.dark .icon-sun {
+  color: #f59e0b; /* Visible amber inactive icon on dark background */
+  opacity: 0.65;
+  transform: scale(0.85);
+}
+
+.theme-toggle-slider.dark .icon-moon {
+  color: #ffffff; /* High contrast white on gradient thumb */
+  opacity: 1;
+  transform: scale(1.1);
 }

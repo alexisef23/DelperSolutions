@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Mono&display=swap');
 
 :root {
   --bg-primary: #0B0F19;
@@ -12,6 +12,66 @@
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  /* Shared variables for theme visual depth */
+  --card-bg: rgba(18, 25, 41, 0.4);
+  --card-border: rgba(255, 255, 255, 0.05);
+  --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-focus-bg: rgba(255, 255, 255, 0.08);
+  --stat-value-color: #CBD5E1;
+  --stat-highlight-color: #FFFFFF;
+  --impact-bg: rgba(0, 242, 254, 0.03);
+  --planner-card-bg: rgba(255, 255, 255, 0.02);
+  --planner-card-border: rgba(255, 255, 255, 0.06);
+  --planner-card-hover-bg: rgba(255, 255, 255, 0.05);
+
+  /* Section backgrounds - Dark Mode defaults */
+  --bg-servicios: #090c15;
+  --bg-portafolio: radial-gradient(circle at center, rgba(18, 25, 41, 0.5) 0%, #0B0F19 100%);
+  --bg-stack: #090c15;
+  --bg-contacto: radial-gradient(circle at bottom right, rgba(178, 36, 239, 0.03), transparent 60%);
+  --section-border: rgba(255, 255, 255, 0.02);
+  --grid-line: rgba(255, 255, 255, 0.015);
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #F8FAFC;
+  --bg-secondary: rgba(241, 245, 249, 0.7);
+  --text-primary: #0F172A;
+  --text-secondary: #334155; /* Darker slate for better text contrast */
+  
+  /* Rich, deeper brand accents for perfect light contrast */
+  --accent-cyan: #0284c7; /* Sky 700 */
+  --accent-blue: #1d4ed8; /* Blue 700 */
+  --accent-purple: #6d28d9; /* Violet 700 */
+  
+  --glass-border: rgba(15, 23, 42, 0.14); /* Defined glass border */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.06);
+  
+  /* Light mode contrast improvements */
+  --card-bg: #ffffff;
+  --card-border: rgba(15, 23, 42, 0.12); /* Defined card border */
+  --card-shadow: 0 12px 30px rgba(15, 23, 42, 0.06); /* Defined card shadow */
+  --input-bg: rgba(15, 23, 42, 0.02);
+  --input-border: rgba(15, 23, 42, 0.12);
+  --input-focus-bg: rgba(15, 23, 42, 0.04);
+  --stat-value-color: #1e293b; /* Deeper color for case studies text */
+  --stat-highlight-color: #0f172a;
+  --impact-bg: rgba(2, 132, 199, 0.06);
+  --planner-card-bg: rgba(15, 23, 42, 0.02);
+  --planner-card-border: rgba(15, 23, 42, 0.08);
+  --planner-card-hover-bg: rgba(15, 23, 42, 0.04);
+
+  /* Section backgrounds - Light Mode overrides */
+  --bg-servicios: #f1f5f9;
+  --bg-portafolio: radial-gradient(circle at center, rgba(241, 245, 249, 0.5) 0%, #F8FAFC 100%);
+  --bg-stack: #f1f5f9;
+  --bg-contacto: radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.03), transparent 60%);
+  --section-border: rgba(15, 23, 42, 0.1); /* Visible section divider line */
+  --grid-line: rgba(15, 23, 42, 0.02);
 }
 
 * {
@@ -30,6 +90,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Smooth, slow theme switching transition */
+body, section, .glass-panel, .input-field, .btn, .tech-item, .tech-category, .service-card, .portfolio-card, .navbar, .contact-form-container, .footer, .theme-toggle-slider, .planner-card, .selector-pill, .eco-card, .eco-card-bar, .eco-card-body, .eco-hub-inner, .eco-code-bar, .eco-code-body, .eco-status, .eco-mobile, .hero-floating-badge, .eco-orbit, .eco-hub-pulse {
+  transition: background-color 2.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              background 2.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 2.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 2.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 2.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.2;
@@ -40,7 +109,7 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
+  border: 2px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
   border-radius: 1rem; /* equivalent to rounded-2xl */
 }
@@ -83,7 +152,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-secondary {
   background: transparent;
   color: var(--text-primary);
-  border: 1px solid var(--glass-border);
+  border: 2px solid var(--glass-border);
 }
 
 .btn-secondary:hover {
@@ -102,11 +171,13 @@ h1, h2, h3, h4, h5, h6 {
 
 section {
   padding: 7rem 0 3rem 0;
+  scroll-margin-top: 6.5rem;
 }
 
 .section-title {
   font-size: 2.5rem;
   text-align: center;
+  margin-top: 5rem;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
@@ -133,8 +204,8 @@ section {
 .input-field {
   width: 100%;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-border);
+  background: var(--input-bg);
+  border: 2px solid var(--input-border);
   border-radius: 0.75rem;
   color: var(--text-primary);
   font-family: inherit;
@@ -145,5 +216,111 @@ section {
 .input-field:focus {
   outline: none;
   border-color: var(--accent-cyan);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--input-focus-bg);
+}
+
+/* App Container layout for layers */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Page Glowing Orbs (Depth) */
+.glowing-orbs-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: orb-drift 20s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 80%);
+  top: -100px;
+  left: -200px;
+  animation-duration: 25s;
+}
+
+.orb-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent-purple) 0%, transparent 80%);
+  top: 30%;
+  right: -250px;
+  animation-duration: 35s;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, var(--accent-blue) 0%, transparent 80%);
+  bottom: 10%;
+  left: -150px;
+  animation-duration: 30s;
+  animation-delay: -10s;
+}
+
+@keyframes orb-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(50px, -30px) scale(1.1);
+  }
+  100% {
+    transform: translate(-30px, 40px) scale(0.9);
+  }
+}
+
+/* Background Grids and Alternating Section Textures */
+.tech-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+                    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+#servicios {
+  background: var(--bg-servicios);
+  border-top: 2px solid var(--section-border);
+  border-bottom: 2px solid var(--section-border);
+  position: relative;
+}
+
+#portafolio {
+  background: var(--bg-portafolio);
+  position: relative;
+}
+
+#stack {
+  background: var(--bg-stack);
+  border-top: 2px solid var(--section-border);
+  border-bottom: 2px solid var(--section-border);
+  position: relative;
+}
+
+#contacto {
+  background: var(--bg-contacto);
+  position: relative;
 }

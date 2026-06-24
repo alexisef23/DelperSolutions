@@ -1,0 +1,199 @@
+/* Introduction block styling */
+.about-intro-block {
+  max-width: 1000px;
+  margin: 0 auto 4rem auto;
+  text-align: center;
+}
+
+.text-center-align {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.about-lead-paragraph {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.about-lead-paragraph strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* 3-Column Pillars Grid */
+.about-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+.about-grid-card {
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 2px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 20px;
+  transition: transform 0.3s ease, border-color 2.3s ease;
+}
+
+.about-grid-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-cyan);
+}
+
+.card-icon-header {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.mission-bg {
+  background: rgba(0, 242, 254, 0.06);
+  border: 2px solid rgba(0, 242, 254, 0.15);
+}
+
+.vision-bg {
+  background: rgba(178, 36, 239, 0.06);
+  border: 2px solid rgba(178, 36, 239, 0.15);
+}
+
+.values-bg {
+  background: rgba(79, 172, 254, 0.06);
+  border: 2px solid rgba(79, 172, 254, 0.15);
+}
+
+.about-card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.about-card-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Accordion for values */
+.valores-card {
+  padding-bottom: 1.25rem;
+}
+
+.about-values-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.accordion-item {
+  border-bottom: 2px solid var(--card-border);
+  transition: border-color 2.3s ease;
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+.accordion-icon-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.value-icon {
+  flex-shrink: 0;
+}
+
+.accordion-title-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.accordion-header:hover .accordion-title-text {
+  color: var(--accent-cyan);
+}
+
+.accordion-chevron {
+  color: var(--text-secondary);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+}
+
+.accordion-item.active .accordion-chevron {
+  transform: rotate(180deg);
+  color: var(--accent-cyan);
+}
+
+.accordion-content-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-item.active .accordion-content-wrapper {
+  max-height: 160px; /* Safe upper limit for values text block */
+}
+
+.accordion-content {
+  padding: 0 0.5rem 1.25rem 2.25rem;
+  font-size: 0.925rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Responsive queries */
+@media (max-width: 1100px) {
+  .about-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .about-grid-card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-intro-block {
+    margin-bottom: 3rem;
+  }
+  .about-lead-paragraph {
+    font-size: 1.05rem;
+  }
+}

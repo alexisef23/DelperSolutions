@@ -6,7 +6,7 @@ const TechStack = () => {
     {
       name: "Frontend",
       techs: [
-        { name: "React", img: null },
+        { name: "React", img: "/assets/logos/React-icon.svg.png" },
         { name: "Next.js", img: "/assets/logos/nextjs-icon-dark-background.png" },
         { name: "Tailwind CSS", img: "/assets/logos/Tailwind_CSS_Logo.svg.png" }
       ]
@@ -24,7 +24,7 @@ const TechStack = () => {
         { name: "PostgreSQL", img: "/assets/logos/Postgresql_elephant.svg.png" },
         { name: "Supabase", img: "/assets/logos/supabase.png" },
         { name: "AWS", img: "/assets/logos/Amazon_Web_Services_Logo.svg.png" },
-        { name: "Railway", img: null }
+        { name: "Railway", img: "/assets/logos/railway.jfif" }
       ]
     },
     {
@@ -32,8 +32,8 @@ const TechStack = () => {
       techs: [
         { name: "Flutter", img: "/assets/logos/Google-flutter-logo.svg.png" },
         { name: "React Native", img: "/assets/logos/react-native-1.png" },
-        { name: "Swift", img: null },
-        { name: "Kotlin", img: null }
+        { name: "Swift", img: "/assets/logos/swift.png" },
+        { name: "Kotlin", img: "/assets/logos/kotlin.jfif" }
       ]
     }
   ];
@@ -51,7 +51,9 @@ const TechStack = () => {
               {category.techs.map((tech, tIdx) => (
                 <div key={tIdx} className="tech-item">
                   {tech.img ? (
-                    <img src={tech.img} alt={tech.name} className="tech-img" />
+                    <div className="tech-img-wrapper">
+                      <img src={tech.img} alt={tech.name} className="tech-img" />
+                    </div>
                   ) : (
                     <div className="tech-placeholder"></div>
                   )}
