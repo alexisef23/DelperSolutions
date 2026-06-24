@@ -155,7 +155,7 @@ const HeroEcosystem = ({ theme }) => (
 
 const Hero = ({ theme }) => {
   return (
-    <section className="hero container animate-fade-in">
+    <div className="hero container animate-fade-in">
       <div className="hero-content">
         
         <h1 className="hero-title">
@@ -188,7 +188,7 @@ const Hero = ({ theme }) => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

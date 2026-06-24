@@ -2,11 +2,29 @@ import React from 'react';
 import './Navbar.css';
 import { Sun, Moon } from 'lucide-react';
 
-const Navbar = ({ theme, toggleTheme }) => {
+const Navbar = ({ theme, toggleTheme, activeSection, onNavClick }) => {
+  const navLinks = [
+    { id: 'inicio', label: 'Inicio' },
+    { id: 'servicios', label: 'Alcance' },
+    { id: 'quienes-somos', label: 'Nosotros' },
+    { id: 'portafolio', label: 'Casos de Éxito' },
+    { id: 'stack', label: 'Arsenal Técnico' },
+    { id: 'contacto', label: 'Contacto' },
+  ];
+
+  const handleClick = (e, sectionId) => {
+    e.preventDefault();
+    onNavClick(sectionId);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <a href="#" className="navbar-brand">
+        <a
+          href="#inicio"
+          className="navbar-brand"
+          onClick={(e) => handleClick(e, 'inicio')}
+        >
           <img 
             src={theme === 'dark' ? '/assets/logo_claro.png' : '/logo.png'} 
             alt="Delper Solutions" 
@@ -16,11 +34,16 @@ const Navbar = ({ theme, toggleTheme }) => {
         </a>
         
         <div className="navbar-menu">
-          <a href="#servicios" className="navbar-link">Alcance</a>
-          <a href="#quienes-somos" className="navbar-link">Nosotros</a>
-          <a href="#portafolio" className="navbar-link">Casos de Éxito</a>
-          <a href="#stack" className="navbar-link">Arsenal Técnico</a>
-          <a href="#contacto" className="navbar-link">Contacto</a>
+          {navLinks.map((link) => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              className={`navbar-link${activeSection === link.id ? ' active' : ''}`}
+              onClick={(e) => handleClick(e, link.id)}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
         
         <button 

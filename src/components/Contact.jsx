@@ -16,7 +16,7 @@ const Contact = () => {
   const selectedTypeLabel = projectTypes.find(t => t.id === projectType)?.label || '';
 
   return (
-    <section id="contacto" className="container animate-fade-in">
+    <div className="container animate-fade-in">
       <div className="contact-wrapper glass-panel">
         <div className="contact-info">
           <h2 className="section-title" style={{ textAlign: 'left', marginTop: 0, marginBottom: '1.5rem' }}>
@@ -106,7 +106,7 @@ const Contact = () => {
           </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

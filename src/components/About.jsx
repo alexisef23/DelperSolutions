@@ -34,7 +34,7 @@ const About = () => {
   ];
 
   return (
-    <section id="quienes-somos" className="container">
+    <div className="container">
       {/* Intro Block - Full Width */}
       <div className="about-intro-block">
         <h2 className="section-title text-center-align">Quiénes <span className="text-gradient">Somos</span></h2>
@@ -107,7 +107,7 @@ const About = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

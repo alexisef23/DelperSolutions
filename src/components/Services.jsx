@@ -22,7 +22,7 @@ const Services = () => {
   ];
 
   return (
-    <section id="servicios" className="container">
+    <div className="container">
       <h2 className="section-title">Nuestro <span className="text-gradient">Alcance</span></h2>
       <p className="section-subtitle">Soluciones de ingeniería a la medida de tu modelo de negocio.</p>
       
@@ -37,7 +37,7 @@ const Services = () => {
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

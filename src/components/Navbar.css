@@ -91,6 +91,15 @@
   transform-origin: left;
 }
 
+/* Active section indicator */
+.navbar-link.active {
+  color: var(--text-primary);
+}
+.navbar-link.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
 @media (max-width: 768px) {
   .navbar {
     padding: 0.6rem 1.5rem;

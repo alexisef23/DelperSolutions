@@ -39,7 +39,7 @@ const TechStack = () => {
   ];
 
   return (
-    <section id="stack" className="container">
+    <div className="container">
       <h2 className="section-title">Nuestro <span className="text-gradient">Arsenal Técnico</span></h2>
       <p className="section-subtitle">Tecnologías de vanguardia para arquitecturas escalables.</p>
       
@@ -64,7 +64,7 @@ const TechStack = () => {
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

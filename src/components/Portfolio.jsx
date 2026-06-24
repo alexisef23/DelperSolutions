@@ -317,7 +317,7 @@ const Portfolio = () => {
   ];
 
   return (
-    <section id="portafolio" className="container">
+    <div className="container">
       <h2 className="section-title">Casos de <span className="text-gradient">Éxito</span></h2>
       <p className="section-subtitle">El corazón de nuestra ingeniería: soluciones probadas con impacto real.</p>
       
@@ -415,7 +415,7 @@ const Portfolio = () => {
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 };
 

@@ -169,15 +169,10 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 1.5rem;
 }
 
-section {
-  padding: 7rem 0 3rem 0;
-  scroll-margin-top: 6.5rem;
-}
-
 .section-title {
   font-size: 2.5rem;
   text-align: center;
-  margin-top: 5rem;
+  margin-top: 2rem;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
@@ -219,17 +214,47 @@ section {
   background: var(--input-focus-bg);
 }
 
-/* App Container layout for layers */
+/* ======================================
+   SCROLL-SNAP FULL PAGE LAYOUT
+   ====================================== */
+html {
+  scroll-behavior: smooth;
+}
+
 .app-container {
   position: relative;
-  min-height: 100vh;
-  overflow: hidden;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
   z-index: 1;
+}
+
+/* Each snap section = one full-viewport "page" */
+.snap-section {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem 0 3rem 0;
+  overflow: hidden;
+}
+
+/* Hero section — center the entire hero block */
+#inicio {
+  padding: 0;
+}
+#inicio .hero {
+  min-height: 100vh;
+  padding-top: 5rem;
 }
 
 /* Page Glowing Orbs (Depth) */
 .glowing-orbs-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -292,7 +317,7 @@ section {
 
 /* Background Grids and Alternating Section Textures */
 .tech-grid-bg {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-size: 40px 40px;
   background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
@@ -301,26 +326,29 @@ section {
   z-index: -1;
 }
 
-#servicios {
+/* Section-specific backgrounds */
+.section-servicios {
   background: var(--bg-servicios);
   border-top: 2px solid var(--section-border);
   border-bottom: 2px solid var(--section-border);
-  position: relative;
 }
 
-#portafolio {
+.section-portafolio {
   background: var(--bg-portafolio);
-  position: relative;
 }
 
-#stack {
+.section-stack {
   background: var(--bg-stack);
   border-top: 2px solid var(--section-border);
   border-bottom: 2px solid var(--section-border);
-  position: relative;
 }
 
-#contacto {
+.section-contacto {
   background: var(--bg-contacto);
-  position: relative;
 }
+
+/* Allow overflow for sections with modals (portfolio) */
+.section-portafolio {
+  overflow: visible;
+}
+

@@ -31,7 +31,7 @@ const Stats = () => {
   ];
 
   return (
-    <section className="stats-section">
+    <div className="stats-section">
       <div className="container">
         <div className="stats-grid">
           {statsList.map((stat, index) => (
@@ -48,7 +48,7 @@ const Stats = () => {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
