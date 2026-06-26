@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import './About.css';
 import { Target, Rocket, Award, Lightbulb, Shuffle, Shield, Eye, Users, ChevronDown } from 'lucide-react';
+import ProcessTimeline from './ProcessTimeline';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const About = () => {
   const [activeValue, setActiveValue] = useState(0);
+  const revealRef = useScrollReveal();
 
   const values = [
     {
@@ -34,7 +37,7 @@ const About = () => {
   ];
 
   return (
-    <div className="container">
+    <div ref={revealRef} className="container">
       {/* Intro Block - Full Width */}
       <div className="about-intro-block">
         <h2 className="section-title text-center-align">Quiénes <span className="text-gradient">Somos</span></h2>
@@ -107,6 +110,9 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      {/* Methodology Timeline */}
+      <ProcessTimeline />
     </div>
   );
 };

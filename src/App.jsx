@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -8,63 +9,58 @@ import Portfolio from './components/Portfolio';
 import TechStack from './components/TechStack';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
+import Loader from './components/Loader';
+import MouseParticles from './components/MouseParticles';
+import AsteroidsGame from './components/AsteroidsGame';
 
-function App() {
-  // Initialize theme from localStorage or default to 'dark'
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'dark';
-  });
+// Scroll manager to scroll back to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
 
-  const [activeSection, setActiveSection] = useState('inicio');
-  const scrollContainerRef = useRef(null);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => {
-      const newTheme = prevTheme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('theme', newTheme);
-      return newTheme;
-    });
+  return null;
+}
+
+// App content wrapper inside the Router context
+function AppContent({ theme, toggleTheme }) {
+  const location = useLocation();
+
+  // Map path to activeSection state
+  const getActiveSection = (path) => {
+    switch (path) {
+      case '/':
+      case '/inicio':
+        return 'inicio';
+      case '/servicios':
+        return 'servicios';
+      case '/quienes-somos':
+        return 'quienes-somos';
+      case '/portafolio':
+        return 'portafolio';
+      case '/stack':
+        return 'stack';
+      case '/contacto':
+        return 'contacto';
+      default:
+        return 'inicio';
+    }
   };
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+  const activeSection = getActiveSection(location.pathname);
 
-  // Track which section is currently visible via IntersectionObserver
-  useEffect(() => {
-    const sectionIds = ['inicio', 'servicios', 'quienes-somos', 'portafolio', 'stack', 'contacto'];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        root: scrollContainerRef.current,
-        threshold: 0.4,
-      }
-    );
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Handle nav clicks — smooth scroll to target section
-  const handleNavClick = useCallback((sectionId) => {
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
+  // Router handles links, so onNavClick can be a dummy
+  const handleNavClick = () => {};
 
   return (
-    <div className="app-container" ref={scrollContainerRef}>
+    <div className="app-container">
+      <Loader theme={theme} />
+      <ScrollToTop />
+      <MouseParticles theme={theme} />
+
       {/* Dynamic Background Glowing Orbs for Depth */}
       <div className="glowing-orbs-container">
         <div className="glow-orb orb-1"></div>
@@ -82,32 +78,71 @@ function App() {
       {/* Tech Grid Background decoration overlay */}
       <div className="tech-grid-bg"></div>
 
-      <section id="inicio" className="snap-section">
-        <Hero theme={theme} />
-      </section>
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<div className="page-container"><Hero theme={theme} /></div>} />
+          <Route path="/inicio" element={<div className="page-container"><Hero theme={theme} /></div>} />
+          <Route path="/servicios" element={
+            <div className="section-servicios page-container">
+              <Services />
+              <AsteroidsGame />
+            </div>
+          } />
+          <Route path="/quienes-somos" element={
+            <div className="section-about page-container">
+              <div className="quienes-somos-page">
+                <Stats />
+                <About />
+              </div>
+            </div>
+          } />
+          <Route path="/portafolio" element={
+            <div className="section-portafolio page-container">
+              <Portfolio />
+            </div>
+          } />
+          <Route path="/stack" element={
+            <div className="section-stack page-container">
+              <TechStack />
+            </div>
+          } />
+          <Route path="/contacto" element={
+            <div className="section-contacto page-container">
+              <Contact />
+            </div>
+          } />
+          <Route path="*" element={<div className="page-container"><Hero theme={theme} /></div>} />
+        </Routes>
+      </main>
 
-      <section id="servicios" className="snap-section section-servicios">
-        <Services />
-      </section>
-
-      <section id="quienes-somos" className="snap-section section-about">
-        <Stats />
-        <About />
-      </section>
-
-      <section id="portafolio" className="snap-section section-portafolio">
-        <Portfolio />
-      </section>
-
-      <section id="stack" className="snap-section section-stack">
-        <TechStack />
-      </section>
-
-      <section id="contacto" className="snap-section section-contacto">
-        <Contact />
-        <Footer />
-      </section>
+      <Footer />
+      <Chatbot />
     </div>
+  );
+}
+
+function App() {
+  // Initialize theme from localStorage or default to 'dark'
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', newTheme);
+      return newTheme;
+    });
+  };
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  return (
+    <Router>
+      <AppContent theme={theme} toggleTheme={toggleTheme} />
+    </Router>
   );
 }
 

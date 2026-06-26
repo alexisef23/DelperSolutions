@@ -100,30 +100,107 @@
   transform-origin: left;
 }
 
+/* Actions area grouping switcher and hamburger toggle */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border-radius: 50%;
+  color: var(--text-primary);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mobile-menu-icon {
+  stroke: var(--text-primary);
+}
+
+.mobile-menu-toggle:hover {
+  transform: scale(1.08);
+}
+
+.mobile-menu-toggle:active {
+  transform: scale(0.92);
+}
+
 @media (max-width: 768px) {
   .navbar {
     padding: 0.6rem 1.5rem;
   }
-  .navbar-menu {
-    gap: 1.25rem;
-  }
-  .navbar-link {
-    font-size: 0.85rem;
-  }
   .navbar-title {
     font-size: 1.1rem;
   }
-}
-
-@media (max-width: 576px) {
+  .mobile-menu-toggle {
+    display: flex;
+  }
   .navbar-menu {
-    display: none; /* Hide menu on smaller mobile phones */
+    display: none; /* Hide standard inline menu on tablets/phones */
+  }
+
+  /* Dropdown container when menu is active on mobile */
+  .navbar-menu.mobile-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 4.5rem;
+    right: 0;
+    width: 100%;
+    background: rgba(11, 15, 25, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    gap: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    animation: slideInMobileMenu 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  :root[data-theme="light"] .navbar-menu.mobile-open {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
+  }
+
+  .navbar-menu.mobile-open .navbar-link {
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+
+  .navbar-menu.mobile-open .navbar-link::after {
+    bottom: -2px;
+    left: 25%;
+    width: 50%;
   }
 }
 
 @media (max-width: 480px) {
   .navbar-title {
     display: none; /* Hide brand text on extra small devices */
+  }
+}
+
+@keyframes slideInMobileMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -163,12 +240,12 @@
 
 .icon-sun {
   z-index: 2;
-  transition: opacity 0.5s ease, transform 0.5s ease, color 0.5s ease;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.6s ease;
 }
 
 .icon-moon {
   z-index: 2;
-  transition: opacity 0.5s ease, transform 0.5s ease, color 0.5s ease;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.6s ease;
 }
 
 .toggle-thumb {
@@ -192,13 +269,13 @@
 .theme-toggle-slider.light .icon-sun {
   color: #ffffff; /* High contrast white on gradient thumb */
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(360deg);
 }
 
 .theme-toggle-slider.light .icon-moon {
   color: #1d4ed8; /* Visible dark-blue inactive icon on light background */
   opacity: 0.6;
-  transform: scale(0.85);
+  transform: scale(0.85) rotate(-45deg);
 }
 
 /* Dark state transitions (Active = Moon (Right), Inactive = Sun (Left)) */
@@ -209,11 +286,11 @@
 .theme-toggle-slider.dark .icon-sun {
   color: #f59e0b; /* Visible amber inactive icon on dark background */
   opacity: 0.65;
-  transform: scale(0.85);
+  transform: scale(0.85) rotate(45deg);
 }
 
 .theme-toggle-slider.dark .icon-moon {
   color: #ffffff; /* High contrast white on gradient thumb */
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(360deg);
 }

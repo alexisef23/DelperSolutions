@@ -15,6 +15,22 @@
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.25;
+}
+
+.text-gradient-wrapper {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  min-height: 4.5rem;
+  vertical-align: bottom;
+}
+
+.decrypt-span {
+  font-family: 'Space Mono', monospace;
+  font-weight: 800;
+  letter-spacing: -0.01em;
 }
 
 .hero-subtitle {
@@ -530,6 +546,18 @@
   animation: float-badge-2 6s ease-in-out infinite 3s;
 }
 
+.badge-3 {
+  top: 65%;
+  left: -50px;
+  animation: float-badge-3 7.5s ease-in-out infinite 1.5s;
+}
+
+.badge-4 {
+  top: 10%;
+  right: -40px;
+  animation: float-badge-4 8s ease-in-out infinite 4s;
+}
+
 .badge-dot {
   width: 8px;
   height: 8px;
@@ -551,6 +579,16 @@
 @keyframes float-badge-2 {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(10px); }
+}
+
+@keyframes float-badge-3 {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes float-badge-4 {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(12px); }
 }
 
 /* ======================================

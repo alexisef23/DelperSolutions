@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Portfolio.css';
-import { ArrowUpRight, X } from 'lucide-react';
+import Testimonials from './Testimonials';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import FloatingHint from './FloatingHint';
 
 const CardMockup = ({ type }) => {
   switch (type) {
@@ -98,104 +100,40 @@ const CardMockup = ({ type }) => {
               {/* Title row */}
               <div className="oxxogo-title-row">
                 <div>
-                  <span className="oxxogo-main-title">Panel de Control Principal</span>
-                  <span className="oxxogo-subtitle">Vista general de operaciones en tiempo real</span>
+                  <div className="oxxogo-mock-title">Panel de Transporte</div>
+                  <div className="oxxogo-mock-subtitle">Resumen diario operativo</div>
                 </div>
-                <div className="oxxogo-date-badge">
-                  <span>19 Nov 2025</span>
-                  <span className="oxxogo-status-active">● Activo</span>
-                </div>
+                <div className="oxxogo-mock-btn">Nueva Ruta</div>
               </div>
 
-              {/* KPI cards grid */}
-              <div className="oxxogo-kpi-grid">
-                <div className="oxxogo-kpi-card border-blue">
-                  <div className="kpi-header">
-                    <span>Puntualidad</span>
-                    <span>⏱️</span>
-                  </div>
-                  <span className="kpi-value">94.5%</span>
-                  <span className="kpi-trend text-green">↑ 2.3%</span>
+              {/* Stats widgets */}
+              <div className="oxxogo-stats-grid">
+                <div className="oxxogo-stat-card">
+                  <span className="oxxogo-card-lbl">Rutas Activas</span>
+                  <span className="oxxogo-card-val text-blue">42</span>
                 </div>
-                <div className="oxxogo-kpi-card border-green">
-                  <div className="kpi-header">
-                    <span>Servicios Hoy</span>
-                    <span>🚌</span>
-                  </div>
-                  <span className="kpi-value">48 <span className="kpi-sub">/ 52</span></span>
-                  <span className="kpi-trend text-blue">4 en curso</span>
-                </div>
-                <div className="oxxogo-kpi-card border-orange">
-                  <div className="kpi-header">
-                    <span>Costo Mes</span>
-                    <span>$</span>
-                  </div>
-                  <span className="kpi-value">$124K</span>
-                  <span className="kpi-trend text-green">↓ 5.2%</span>
-                </div>
-                <div className="oxxogo-kpi-card border-purple">
-                  <div className="kpi-header">
-                    <span>NPS</span>
-                    <span>👍</span>
-                  </div>
-                  <span className="kpi-value">87 <span className="kpi-sub">/ 100</span></span>
-                  <span className="kpi-trend text-purple">Excelente</span>
+                <div className="oxxogo-stat-card">
+                  <span className="oxxogo-card-lbl">Puntualidad</span>
+                  <span className="oxxogo-card-val text-green">94.5%</span>
                 </div>
               </div>
-
-              {/* Charts area */}
-              <div className="oxxogo-charts-row">
-                <div className="oxxogo-chart-box">
-                  <span className="chart-title">Evolución de Puntualidad</span>
-                  <div className="mock-line-chart">
-                    <svg viewBox="0 0 100 30" className="svg-line-chart">
-                      <path d="M0,20 Q20,25 40,15 T80,10 T100,5" fill="none" stroke="var(--accent-cyan)" strokeWidth="1.5" />
-                      <circle cx="40" cy="15" r="1.5" fill="var(--accent-cyan)" />
-                      <circle cx="80" cy="10" r="1.5" fill="var(--accent-cyan)" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="oxxogo-chart-box">
-                  <span className="chart-title">Servicios por Día</span>
-                  <div className="mock-bar-chart">
-                    <div className="mock-bar" style={{ height: '70%' }}></div>
-                    <div className="mock-bar" style={{ height: '80%' }}></div>
-                    <div className="mock-bar" style={{ height: '95%' }}></div>
-                    <div className="mock-bar" style={{ height: '85%' }}></div>
-                    <div className="mock-bar" style={{ height: '90%' }}></div>
-                    <div className="mock-bar" style={{ height: '50%' }}></div>
-                    <div className="mock-bar" style={{ height: '40%' }}></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Tab navigation footer */}
-            <div className="oxxogo-mock-footer">
-              <span className="footer-tab active">Panel</span>
-              <span className="footer-tab">Gestión</span>
-              <span className="footer-tab">Finanzas</span>
-              <span className="footer-tab">Reportes</span>
             </div>
           </div>
         </div>
       );
     case "booking-calendar":
       return (
-        <div className="card-mockup mobile-mockup mockup-novo-sushi">
-          <div className="mobile-screen novo-sushi-screen">
-            {/* Header */}
-            <div className="sushi-mobile-header">
-              <img src="/assets/Empresa satisfechas/icono_novo.png" alt="Novo Sushi Logo" className="sushi-mobile-logo" />
-              <div className="sushi-mobile-icons">
-                <span className="sushi-icon-cart">🛒</span>
-                <span className="sushi-icon-menu">☰</span>
-              </div>
-            </div>
-
-            {/* Content Body */}
-            <div className="sushi-mobile-body">
-              {/* Badge */}
+        <div className="card-mockup browser-mockup mockup-novosushi">
+          <div className="browser-header sushi-header">
+            <span className="dot dot-red"></span>
+            <span className="dot dot-yellow"></span>
+            <span className="dot dot-green"></span>
+            <div className="browser-url">novosushi.com/reservas</div>
+          </div>
+          <div className="browser-body novosushi-body">
+            {/* Floating Card UI layout mock */}
+            <div className="sushi-screen">
+              {/* Top Header */}
               <div className="sushi-mobile-badge">
                 <span className="badge-pulse-dot"></span>
                 <span>Gastronomía Japonesa Auténtica • Parral</span>
@@ -257,8 +195,111 @@ const CardMockup = ({ type }) => {
   }
 };
 
+const PortfolioCard = ({ item, isZeroGravity }) => {
+  const [style, setStyle] = useState({});
+  const [shineStyle, setShineStyle] = useState({ opacity: 0 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const xc = rect.width / 2;
+    const yc = rect.height / 2;
+    const dx = x - xc;
+    const dy = y - yc;
+    const rx = -(dy / yc) * 8; // tilt max 8 degrees
+    const ry = (dx / xc) * 8;
+
+    setStyle({
+      transform: `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`,
+      transition: 'transform 0.08s ease, box-shadow 0.08s ease',
+      boxShadow: '0 20px 45px rgba(0, 242, 254, 0.12), 0 0 30px rgba(178, 36, 239, 0.06)'
+    });
+
+    const px = (x / rect.width) * 100;
+    const py = (y / rect.height) * 100;
+    setShineStyle({
+      background: `radial-gradient(circle at ${px}% ${py}%, rgba(255, 255, 255, 0.08) 0%, transparent 60%)`,
+      opacity: 1
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setStyle({
+      transform: '',
+      transition: 'transform 0.5s ease, box-shadow 0.5s ease'
+    });
+    setShineStyle({
+      opacity: 0,
+      transition: 'opacity 0.5s ease'
+    });
+  };
+
+  return (
+    <div 
+      className={`portfolio-card glass-panel relative-card ${isZeroGravity ? 'zero-gravity' : ''}`} 
+      style={isZeroGravity ? { animationDelay: `${Math.random()}s` } : style}
+      onMouseMove={isZeroGravity ? undefined : handleMouseMove}
+      onMouseLeave={isZeroGravity ? undefined : handleMouseLeave}
+    >
+      <div className="shine-overlay" style={shineStyle} />
+      <div className="portfolio-visual-container">
+        <CardMockup type={item.type} />
+      </div>
+      
+      <div className="portfolio-header">
+        <div className="portfolio-client-logo">
+          {item.image ? (
+            <img src={item.image} alt={item.client} className="client-img" />
+          ) : (
+            <div className="client-placeholder">{item.client.charAt(0)}</div>
+          )}
+        </div>
+        <div className="portfolio-title-wrapper">
+          <h3 className="portfolio-title">{item.title}</h3>
+          <span className="portfolio-client">{item.client}</span>
+        </div>
+      </div>
+      
+      <div className="portfolio-content">
+        <div className="portfolio-stat">
+          <span className="stat-label">Problema</span>
+          <p className="stat-value">{item.problem}</p>
+        </div>
+        <div className="portfolio-stat">
+          <span className="stat-label">Solución</span>
+          <p className="stat-value">{item.solution}</p>
+        </div>
+        <div className="portfolio-stat impact">
+          <span className="stat-label text-gradient">Impacto</span>
+          <p className="stat-value highlight">{item.impact}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Portfolio = () => {
-  const [selectedCase, setSelectedCase] = useState(null);
+  const revealRef = useScrollReveal();
+  const [clickCount, setClickCount] = useState(0);
+  const [zeroGravity, setZeroGravity] = useState(false);
+  const clickTimeout = useRef(null);
+
+  const handleTitleClick = () => {
+    if (zeroGravity) return;
+    setClickCount(prev => prev + 1);
+    clearTimeout(clickTimeout.current);
+    clickTimeout.current = setTimeout(() => {
+      setClickCount(0);
+    }, 1000); // 1 second to click 3 times
+  };
+
+  useEffect(() => {
+    if (clickCount >= 3) {
+      setZeroGravity(true);
+    }
+  }, [clickCount]);
+
   const cases = [
     {
       title: "Zyklus Halo",
@@ -272,7 +313,7 @@ const Portfolio = () => {
     {
       title: "Clasificación de Leads y Ticketing",
       client: "Desarrollo para Inttec",
-      image: null,
+      image: "/assets/Empresa satisfechas/inttec.jpeg",
       problem: "Saturación en flujos comerciales y atención al cliente manual.",
       solution: "Solución de automatización inteligente con calificación automatizada en tiempo real.",
       impact: "Canalización de flujos comerciales eficiente e integración nativa con sistema de tickets.",
@@ -317,104 +358,31 @@ const Portfolio = () => {
   ];
 
   return (
-    <div className="container">
-      <h2 className="section-title">Casos de <span className="text-gradient">Éxito</span></h2>
-      <p className="section-subtitle">El corazón de nuestra ingeniería: soluciones probadas con impacto real.</p>
+    <div ref={revealRef} className="container animate-fade-in">
+      <h2 
+        className="section-title" 
+        onClick={handleTitleClick} 
+        style={{ cursor: 'pointer', userSelect: 'none' }}
+      >
+        Casos de <span className="text-gradient">Éxito</span>
+      </h2>
+      <p className="section-subtitle">
+        El corazón de nuestra ingeniería: soluciones probadas con impacto real.
+      </p>
+      <FloatingHint message='Haz clic rápido 3 veces en el título "Casos de Éxito" para romper las leyes de la física' />
       
       <div className="portfolio-grid">
         {cases.map((item, index) => (
-          <div key={index} className="portfolio-card glass-panel" onClick={() => setSelectedCase(item)}>
-            <div className="portfolio-visual-container">
-              <CardMockup type={item.type} />
-            </div>
-            
-            <div className="portfolio-header">
-              <div className="portfolio-client-logo">
-                {item.image ? (
-                  <img src={item.image} alt={item.client} className="client-img" />
-                ) : (
-                  <div className="client-placeholder">{item.client.charAt(0)}</div>
-                )}
-              </div>
-              <div className="portfolio-title-wrapper">
-                <h3 className="portfolio-title">{item.title}</h3>
-                <span className="portfolio-client">{item.client}</span>
-              </div>
-              <ArrowUpRight className="portfolio-link-icon" />
-            </div>
-            
-            <div className="portfolio-content">
-              <div className="portfolio-stat">
-                <span className="stat-label">Problema</span>
-                <p className="stat-value">{item.problem}</p>
-              </div>
-              <div className="portfolio-stat">
-                <span className="stat-label">Solución</span>
-                <p className="stat-value">{item.solution}</p>
-              </div>
-              <div className="portfolio-stat impact">
-                <span className="stat-label text-gradient">Impacto</span>
-                <p className="stat-value highlight">{item.impact}</p>
-              </div>
-            </div>
-          </div>
+          <PortfolioCard 
+            key={index} 
+            item={item} 
+            isZeroGravity={zeroGravity}
+          />
         ))}
       </div>
 
-      {/* Detailed Modal Pop-up */}
-      {selectedCase && (
-        <div className="portfolio-modal-overlay" onClick={() => setSelectedCase(null)}>
-          <div className="portfolio-modal-content glass-panel" onClick={(e) => e.stopPropagation()}>
-            <button 
-              className="modal-close-btn" 
-              onClick={() => setSelectedCase(null)} 
-              aria-label="Cerrar modal"
-              type="button"
-            >
-              <X size={20} />
-            </button>
-            
-            <div className="modal-inner-layout">
-              {/* Left Column: Visual Mockup (larger) */}
-              <div className="modal-visual-col">
-                <CardMockup type={selectedCase.type} />
-              </div>
-              
-              {/* Right Column: Text Details */}
-              <div className="modal-info-col">
-                <div className="modal-header-info">
-                  <div className="portfolio-client-logo">
-                    {selectedCase.image ? (
-                      <img src={selectedCase.image} alt={selectedCase.client} className="client-img" />
-                    ) : (
-                      <div className="client-placeholder">{selectedCase.client.charAt(0)}</div>
-                    )}
-                  </div>
-                  <div className="portfolio-title-wrapper">
-                    <h3 className="modal-case-title">{selectedCase.title}</h3>
-                    <span className="portfolio-client">{selectedCase.client}</span>
-                  </div>
-                </div>
-                
-                <div className="modal-stats-list">
-                  <div className="portfolio-stat">
-                    <span className="stat-label">Desafío / Problema</span>
-                    <p className="stat-value">{selectedCase.problem}</p>
-                  </div>
-                  <div className="portfolio-stat">
-                    <span className="stat-label">Ingeniería Aplicada</span>
-                    <p className="stat-value">{selectedCase.solution}</p>
-                  </div>
-                  <div className="portfolio-stat impact">
-                    <span className="stat-label text-gradient">Resultados Obtenidos</span>
-                    <p className="stat-value highlight">{selectedCase.impact}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Testimonials Section */}
+      <Testimonials />
     </div>
   );
 };

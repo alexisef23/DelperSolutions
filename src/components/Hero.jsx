@@ -1,6 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Hero.css';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useMagnetic } from '../hooks/useMagnetic';
+import ParticleButton from './ParticleButton';
+
+const PHRASES = [
+  "Código de Producción",
+  "Sistemas Robustos",
+  "Plataformas Web",
+  "Agentes con IA",
+  "Aplicaciones Nativas"
+];
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
+
+const DecryptText = () => {
+  const [displayText, setDisplayText] = useState("");
+  const [phraseIdx, setPhraseIdx] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+    const targetWord = PHRASES[phraseIdx];
+    let iteration = 0;
+    let interval;
+
+    interval = setInterval(() => {
+      if (!active) return;
+      
+      setDisplayText(() => {
+        return targetWord
+          .split("")
+          .map((char, index) => {
+            if (index < iteration) {
+              return targetWord[index];
+            }
+            if (char === " ") return " ";
+            return CHARS[Math.floor(Math.random() * CHARS.length)];
+          })
+          .join("");
+      });
+
+      if (iteration >= targetWord.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          if (active) {
+            setPhraseIdx(prev => (prev + 1) % PHRASES.length);
+          }
+        }, 3000);
+      }
+      iteration += 1 / 3;
+    }, 25);
+
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, [phraseIdx]);
+
+  return <span className="decrypt-span">{displayText}</span>;
+};
 
 const HeroEcosystem = ({ theme }) => (
   <div className="hero-ecosystem">
@@ -21,7 +79,6 @@ const HeroEcosystem = ({ theme }) => (
     </div>
 
     {/* Floating Cards */}
-
     {/* Browser Window - Web App */}
     <div className="eco-card eco-card-1 glass-panel">
       <div className="eco-card-bar">
@@ -154,12 +211,18 @@ const HeroEcosystem = ({ theme }) => (
 );
 
 const Hero = ({ theme }) => {
+  const btnPrimaryRef = useMagnetic(0.2);
+  const btnSecondaryRef = useMagnetic(0.2);
+
   return (
     <div className="hero container animate-fade-in">
       <div className="hero-content">
         
         <h1 className="hero-title">
-          Transformamos tus ideas en <span className="text-gradient">Sistemas Robustos</span>, Plataformas Full-Stack y Apps Nativas
+          Transformamos tus ideas en <br />
+          <span className="text-gradient-wrapper">
+            <DecryptText />
+          </span>
         </h1>
         
         <p className="hero-subtitle">
@@ -167,12 +230,16 @@ const Hero = ({ theme }) => {
         </p>
         
         <div className="hero-actions">
-          <a href="#contacto" className="btn btn-primary">
-            Iniciar mi proyecto <ArrowRight className="ml-2" size={18} />
-          </a>
-          <a href="#portafolio" className="btn btn-secondary">
-            Ver Casos de Éxito
-          </a>
+          <div ref={btnPrimaryRef}>
+            <ParticleButton to="/contacto" className="btn btn-primary">
+              Iniciar mi proyecto <ArrowRight className="ml-2" size={18} />
+            </ParticleButton>
+          </div>
+          <div ref={btnSecondaryRef}>
+            <ParticleButton to="/portafolio" className="btn btn-secondary">
+              Ver Casos de Éxito
+            </ParticleButton>
+          </div>
         </div>
       </div>
       
@@ -185,6 +252,12 @@ const Hero = ({ theme }) => {
           </div>
           <div className="hero-floating-badge badge-2">
             <span className="badge-dot purple"></span> Apps iOS &amp; Android
+          </div>
+          <div className="hero-floating-badge badge-3">
+            <span className="badge-dot cyan"></span> Agentes IA
+          </div>
+          <div className="hero-floating-badge badge-4">
+            <span className="badge-dot purple"></span> Automatización
           </div>
         </div>
       </div>

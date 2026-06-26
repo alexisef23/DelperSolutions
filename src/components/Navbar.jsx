@@ -1,29 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Menu, X } from 'lucide-react';
+import { Link, NavLink } from 'react-router-dom';
+import { useMagnetic } from '../hooks/useMagnetic';
 
-const Navbar = ({ theme, toggleTheme, activeSection, onNavClick }) => {
+const Navbar = ({ theme, toggleTheme }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleRef = useMagnetic(0.25);
+
   const navLinks = [
-    { id: 'inicio', label: 'Inicio' },
-    { id: 'servicios', label: 'Alcance' },
-    { id: 'quienes-somos', label: 'Nosotros' },
-    { id: 'portafolio', label: 'Casos de Éxito' },
-    { id: 'stack', label: 'Arsenal Técnico' },
-    { id: 'contacto', label: 'Contacto' },
+    { id: 'inicio', path: '/', label: 'Inicio' },
+    { id: 'servicios', path: '/servicios', label: 'Alcance' },
+    { id: 'quienes-somos', path: '/quienes-somos', label: 'Nosotros' },
+    { id: 'portafolio', path: '/portafolio', label: 'Casos de Éxito' },
+    { id: 'stack', path: '/stack', label: 'Arsenal Técnico' },
+    { id: 'contacto', path: '/contacto', label: 'Contacto' },
   ];
-
-  const handleClick = (e, sectionId) => {
-    e.preventDefault();
-    onNavClick(sectionId);
-  };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <a
-          href="#inicio"
+        <Link
+          to="/"
           className="navbar-brand"
-          onClick={(e) => handleClick(e, 'inicio')}
+          onClick={() => setIsMenuOpen(false)}
         >
           <img 
             src={theme === 'dark' ? '/assets/logo_claro.png' : '/logo.png'} 
@@ -31,33 +31,46 @@ const Navbar = ({ theme, toggleTheme, activeSection, onNavClick }) => {
             className="navbar-logo" 
           />
           <span className="navbar-title">Delper Solutions</span>
-        </a>
+        </Link>
         
-        <div className="navbar-menu">
+        <div className={`navbar-menu ${isMenuOpen ? 'mobile-open' : ''}`}>
           {navLinks.map((link) => (
-            <a
+            <NavLink
               key={link.id}
-              href={`#${link.id}`}
-              className={`navbar-link${activeSection === link.id ? ' active' : ''}`}
-              onClick={(e) => handleClick(e, link.id)}
+              to={link.path}
+              className={({ isActive }) => `navbar-link${isActive ? ' active' : ''}`}
+              onClick={() => setIsMenuOpen(false)}
+              end={link.path === '/'}
             >
               {link.label}
-            </a>
+            </NavLink>
           ))}
         </div>
         
-        <button 
-          onClick={toggleTheme} 
-          className="theme-toggle-btn" 
-          aria-label="Cambiar tema"
-          type="button"
-        >
-          <div className={`theme-toggle-slider ${theme}`}>
-            <Sun className="icon-sun" size={14} />
-            <Moon className="icon-moon" size={14} />
-            <div className="toggle-thumb"></div>
-          </div>
-        </button>
+        <div className="navbar-actions">
+          <button 
+            ref={toggleRef}
+            onClick={toggleTheme} 
+            className="theme-toggle-btn" 
+            aria-label="Cambiar tema"
+            type="button"
+          >
+            <div className={`theme-toggle-slider ${theme}`}>
+              <Sun className="icon-sun" size={14} />
+              <Moon className="icon-moon" size={14} />
+              <div className="toggle-thumb"></div>
+            </div>
+          </button>
+
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)} 
+            className="mobile-menu-toggle" 
+            aria-label="Alternar menú"
+            type="button"
+          >
+            {isMenuOpen ? <X className="mobile-menu-icon" size={24} /> : <Menu className="mobile-menu-icon" size={24} />}
+          </button>
+        </div>
       </div>
     </nav>
   );

@@ -61,4 +61,47 @@
   line-height: 1.7;
   position: relative;
   z-index: 1;
+  flex: 1; /* Pushes the CTA to the bottom */
+}
+
+.service-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.service-card:hover .service-cta {
+  color: var(--text-primary);
+}
+
+.cta-arrow {
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .cta-arrow {
+  transform: translateX(5px);
+}
+
+.relative-card {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.shine-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.15s ease;
 }
