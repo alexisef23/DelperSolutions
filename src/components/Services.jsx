@@ -10,6 +10,7 @@ const ServiceCard = ({ service, onClick }) => {
   const [shineStyle, setShineStyle] = useState({ opacity: 0 });
 
   const handleMouseMove = (e) => {
+    if (document.body.classList.contains('physics-active')) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -35,6 +36,7 @@ const ServiceCard = ({ service, onClick }) => {
   };
 
   const handleMouseLeave = () => {
+    if (document.body.classList.contains('physics-active')) return;
     setStyle({
       transform: '',
       transition: 'transform 0.5s ease, box-shadow 0.5s ease'
@@ -102,7 +104,7 @@ const Services = () => {
     <div ref={revealRef} className="container">
       <h2 className="section-title">Nuestro <span className="text-gradient">Alcance</span></h2>
       <p className="section-subtitle">Soluciones de ingeniería a la medida de tu modelo de negocio.</p>
-      <FloatingHint message='Deja el ratón quieto por 4 segundos para activar el modo secreto 🚀' />
+      <FloatingHint delaySeconds={8} message='Deja el ratón quieto por 10 segundos para activar el modo secreto 🚀' />
       
       <div className="services-grid">
         {services.map((service, index) => (

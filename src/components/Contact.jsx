@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import './Contact.css';
 import { Smartphone, Globe, Cpu, Sparkles, Check, ChevronRight, ChevronLeft, Calendar, DollarSign, Activity } from 'lucide-react';
 import Faq from './Faq';
@@ -177,7 +178,7 @@ const Contact = () => {
   return (
     <div ref={revealRef} className="container animate-fade-in">
       {/* Hacker Terminal Overlay */}
-      {hackerMode && (
+      {hackerMode && createPortal(
         <div 
           className="hacker-overlay" 
           onClick={() => setHackerMode(false)}
@@ -209,7 +210,8 @@ const Contact = () => {
             ))}
             <span style={{ animation: 'blink 1s step-end infinite' }}>█</span>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       <div className="contact-wrapper glass-panel">

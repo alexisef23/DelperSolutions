@@ -78,7 +78,7 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="testimonials-section glass-panel">
+    <div className="testimonials-section glass-panel physics-body">
       <div className="testimonials-header">
         <h3 className="testimonials-title">Opiniones de <span className="text-gradient">Nuestros Clientes</span></h3>
         <p className="testimonials-subtitle">Lo que dicen las empresas que confían en nuestro arsenal técnico.</p>

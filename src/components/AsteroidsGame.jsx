@@ -38,7 +38,7 @@ const AsteroidsGame = () => {
       clearTimeout(idleTimeoutRef.current);
       idleTimeoutRef.current = setTimeout(() => {
         setIsActive(true);
-      }, 4000); // 4 seconds idle
+      }, 10000); // 10 seconds idle
     };
 
     const events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'];
@@ -46,7 +46,7 @@ const AsteroidsGame = () => {
     
     idleTimeoutRef.current = setTimeout(() => {
       setIsActive(true);
-    }, 4000);
+    }, 10000);
 
     return () => {
       events.forEach(event => window.removeEventListener(event, resetIdleTimer));
@@ -317,12 +317,12 @@ const AsteroidsGame = () => {
 
     // Help Text
     ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-    ctx.font = "bold 20px 'Space Mono', monospace";
+    ctx.font = "bold 24px 'Space Mono', monospace";
     ctx.textAlign = "center";
-    ctx.fillText("¡Alerta de Intrusión! MODO ASTEROIDS", width / 2, 80);
-    ctx.font = "14px 'Space Mono', monospace";
-    ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-    ctx.fillText("Mover: Flechas / WASD  |  Disparar: ESPACIO  |  Salir: ESC", width / 2, 110);
+    ctx.fillText("¡Alerta de Intrusión! MODO ASTEROIDS", width / 2, 140);
+    ctx.font = "16px 'Space Mono', monospace";
+    ctx.fillStyle = "#88ccff";
+    ctx.fillText("Mover: Flechas / WASD  |  Disparar: ESPACIO  |  Salir: ESC", width / 2, 170);
 
     // Draw Ship
     if (!gameOver) {

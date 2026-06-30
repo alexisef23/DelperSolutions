@@ -3,6 +3,7 @@ import './Portfolio.css';
 import Testimonials from './Testimonials';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import FloatingHint from './FloatingHint';
+import { usePhysicsEasterEgg } from '../hooks/usePhysicsEasterEgg';
 
 const CardMockup = ({ type }) => {
   switch (type) {
@@ -195,11 +196,12 @@ const CardMockup = ({ type }) => {
   }
 };
 
-const PortfolioCard = ({ item, isZeroGravity }) => {
+const PortfolioCard = ({ item, className }) => {
   const [style, setStyle] = useState({});
   const [shineStyle, setShineStyle] = useState({ opacity: 0 });
 
   const handleMouseMove = (e) => {
+    if (document.body.classList.contains('physics-active')) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -225,6 +227,7 @@ const PortfolioCard = ({ item, isZeroGravity }) => {
   };
 
   const handleMouseLeave = () => {
+    if (document.body.classList.contains('physics-active')) return;
     setStyle({
       transform: '',
       transition: 'transform 0.5s ease, box-shadow 0.5s ease'
@@ -237,10 +240,10 @@ const PortfolioCard = ({ item, isZeroGravity }) => {
 
   return (
     <div 
-      className={`portfolio-card glass-panel relative-card ${isZeroGravity ? 'zero-gravity' : ''}`} 
-      style={isZeroGravity ? { animationDelay: `${Math.random()}s` } : style}
-      onMouseMove={isZeroGravity ? undefined : handleMouseMove}
-      onMouseLeave={isZeroGravity ? undefined : handleMouseLeave}
+      className={`portfolio-card glass-panel relative-card ${className || ''}`} 
+      style={style}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="shine-overlay" style={shineStyle} />
       <div className="portfolio-visual-container">
@@ -282,11 +285,10 @@ const PortfolioCard = ({ item, isZeroGravity }) => {
 const Portfolio = () => {
   const revealRef = useScrollReveal();
   const [clickCount, setClickCount] = useState(0);
-  const [zeroGravity, setZeroGravity] = useState(false);
-  const clickTimeout = useRef(null);
+  const { activatePhysics, isActive: isPhysicsActive } = usePhysicsEasterEgg();
 
   const handleTitleClick = () => {
-    if (zeroGravity) return;
+    if (isPhysicsActive) return;
     setClickCount(prev => prev + 1);
     clearTimeout(clickTimeout.current);
     clickTimeout.current = setTimeout(() => {
@@ -296,9 +298,9 @@ const Portfolio = () => {
 
   useEffect(() => {
     if (clickCount >= 3) {
-      setZeroGravity(true);
+      activatePhysics();
     }
-  }, [clickCount]);
+  }, [clickCount, activatePhysics]);
 
   const cases = [
     {
@@ -369,14 +371,14 @@ const Portfolio = () => {
       <p className="section-subtitle">
         El corazón de nuestra ingeniería: soluciones probadas con impacto real.
       </p>
-      <FloatingHint message='Haz clic rápido 3 veces en el título "Casos de Éxito" para romper las leyes de la física' />
+      <FloatingHint message='Haz clic rápido 3 veces en el título "Casos de Éxito" para colapsar la gravedad' />
       
       <div className="portfolio-grid">
         {cases.map((item, index) => (
           <PortfolioCard 
             key={index} 
             item={item} 
-            isZeroGravity={zeroGravity}
+            className="physics-body"
           />
         ))}
       </div>

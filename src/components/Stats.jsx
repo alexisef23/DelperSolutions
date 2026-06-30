@@ -53,7 +53,7 @@ const Stats = () => {
           {statsList.map((stat, index) => (
             <div 
               key={index} 
-              className="stat-item-card glass-panel"
+              className="stat-item-card glass-panel physics-body"
               onDoubleClick={() => handleDoubleClick(index)}
               style={{ cursor: 'pointer', userSelect: 'none' }}
             >
