@@ -185,6 +185,19 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.125rem;
 }
 
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  .section-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  .container {
+    padding: 0 1.25rem;
+  }
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }

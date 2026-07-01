@@ -89,13 +89,13 @@ const Contact = () => {
   // Dynamic calculation logic
   const calculateBudget = () => {
     const basePrices = {
-      web: 5000,
-      mobile: 5500,
-      custom: 6000,
-      ai: 6500
+      web: 3000,
+      mobile: 3500,
+      custom: 4000,
+      ai: 4500
     };
 
-    const basePrice = basePrices[projectType] || 5000;
+    const basePrice = basePrices[projectType] || 3000;
     const featuresCost = selectedFeatures.length * 500;
     const subtotal = basePrice + featuresCost;
     

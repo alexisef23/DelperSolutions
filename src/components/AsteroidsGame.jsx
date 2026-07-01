@@ -25,6 +25,8 @@ const AsteroidsGame = () => {
 
   // --- Idle Detection ---
   useEffect(() => {
+    if (window.innerWidth <= 768) return;
+
     const resetIdleTimer = (e) => {
       // Don't reset if game is active, except for ESC key
       if (isActive) {

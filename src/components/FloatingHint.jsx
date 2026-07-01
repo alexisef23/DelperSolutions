@@ -4,6 +4,10 @@ import { createPortal } from 'react-dom';
 const FloatingHint = ({ message, delaySeconds = 10 }) => {
   const [phase, setPhase] = useState('hidden');
 
+  if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+    return null;
+  }
+
   useEffect(() => {
     const showTimer = setTimeout(() => {
       setPhase('visible');

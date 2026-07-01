@@ -8,6 +8,7 @@ export const usePhysicsEasterEgg = () => {
 
   const activatePhysics = () => {
     if (isActive) return;
+    if (window.innerWidth <= 768) return;
     setIsActive(true);
 
     // Prevent scrolling once physics start
