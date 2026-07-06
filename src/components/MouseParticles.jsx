@@ -51,16 +51,27 @@ const MouseParticles = ({ theme }) => {
       }
     }
 
+    let isAnimating = false;
+
     const handleMouseMove = (e) => {
       // Add a few particles on mouse move
       for(let i = 0; i < 3; i++){
         particles.current.push(new Particle(e.clientX, e.clientY));
+      }
+      if (!isAnimating) {
+        isAnimating = true;
+        animate();
       }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
 
     const animate = () => {
+      if (particles.current.length === 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        isAnimating = false;
+        return;
+      }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let i = 0; i < particles.current.length; i++) {
         particles.current[i].update();
@@ -72,12 +83,11 @@ const MouseParticles = ({ theme }) => {
       }
       animationFrameId = requestAnimationFrame(animate);
     };
-    animate();
 
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, [theme]);
 

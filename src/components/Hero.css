@@ -98,8 +98,12 @@
   left: 50%;
   border-radius: 50%;
   border: 1px dashed rgba(0, 242, 254, 0.12);
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
+  -webkit-transform: translate3d(-50%, -50%, 0);
   pointer-events: none;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .eco-orbit-1 {
   width: 300px;
@@ -114,8 +118,8 @@
 }
 
 @keyframes orbit-spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to   { transform: translate(-50%, -50%) rotate(360deg); }
+  from { transform: translate3d(-50%, -50%, 0) rotate(0deg); -webkit-transform: translate3d(-50%, -50%, 0) rotate(0deg); }
+  to   { transform: translate3d(-50%, -50%, 0) rotate(360deg); -webkit-transform: translate3d(-50%, -50%, 0) rotate(360deg); }
 }
 
 /* ======================================
@@ -153,16 +157,20 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
+  -webkit-transform: translate3d(-50%, -50%, 0);
   width: 64px;
   height: 64px;
   border-radius: 16px;
   border: 2px solid var(--accent-cyan);
   animation: hub-pulse 2.5s ease-out infinite;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 @keyframes hub-pulse {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-  100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+  0% { transform: translate3d(-50%, -50%, 0) scale(1); -webkit-transform: translate3d(-50%, -50%, 0) scale(1); opacity: 0.6; }
+  100% { transform: translate3d(-50%, -50%, 0) scale(2.2); -webkit-transform: translate3d(-50%, -50%, 0) scale(2.2); opacity: 0; }
 }
 
 /* ======================================
@@ -174,6 +182,11 @@
   overflow: hidden;
   z-index: 5;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .eco-card-bar {
@@ -275,12 +288,12 @@
 }
 
 @keyframes float-a {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-10px); }
+  0%, 100% { transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(0, -10px, 0); -webkit-transform: translate3d(0, -10px, 0); }
 }
 @keyframes float-b {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(10px); }
+  0%, 100% { transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(0, 10px, 0); -webkit-transform: translate3d(0, 10px, 0); }
 }
 
 /* ======================================
@@ -532,6 +545,11 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   pointer-events: none;
   z-index: 20;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .badge-1 {
@@ -572,30 +590,37 @@
 }
 
 @keyframes float-badge-1 {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-10px); }
+  0%, 100% { transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(0, -10px, 0); -webkit-transform: translate3d(0, -10px, 0); }
 }
 
 @keyframes float-badge-2 {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(10px); }
+  0%, 100% { transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(0, 10px, 0); -webkit-transform: translate3d(0, 10px, 0); }
 }
 
 @keyframes float-badge-3 {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-12px); }
+  0%, 100% { transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(0, -12px, 0); -webkit-transform: translate3d(0, -12px, 0); }
 }
 
 @keyframes float-badge-4 {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(12px); }
+  0%, 100% { transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(0, 12px, 0); -webkit-transform: translate3d(0, 12px, 0); }
 }
 
 /* ======================================
    RESPONSIVE
    ====================================== */
 @media (max-width: 992px) {
-  .hero-floating-badge { display: none; }
+  .hero-floating-badge {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.75rem;
+  }
+  .badge-1 { top: 10%; left: 0px; }
+  .badge-2 { bottom: 10%; right: 0px; }
+  .badge-3 { display: none; }
+  .badge-4 { display: none; }
   .hero-ecosystem {
     width: 360px;
     height: 360px;
@@ -603,35 +628,60 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    padding-top: 5.5rem;
+  }
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
+    line-height: 1.25;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    padding: 0 1rem;
   }
   .hero-actions {
     flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+  .hero-actions > div {
+    width: 100%;
+    max-width: 290px;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
   }
   .hero-ecosystem {
     width: 300px;
     height: 300px;
   }
-  .eco-card-1, .eco-card-3, .eco-card-4 { display: none; }
+  .eco-card-1, .eco-card-3, .eco-card-6 { display: none; }
 }
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.85rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
   }
   .hero-ecosystem {
-    width: 260px;
-    height: 260px;
+    width: 250px;
+    height: 250px;
     transform: scale(0.85);
   }
   .eco-orbit-1 {
-    width: 200px;
-    height: 200px;
+    width: 170px;
+    height: 170px;
   }
   .eco-orbit-2 {
-    width: 280px;
-    height: 280px;
+    width: 230px;
+    height: 230px;
   }
 }
 

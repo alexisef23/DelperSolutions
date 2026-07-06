@@ -89,13 +89,13 @@ const Contact = () => {
   // Dynamic calculation logic
   const calculateBudget = () => {
     const basePrices = {
-      web: 3000,
-      mobile: 3500,
-      custom: 4000,
-      ai: 4500
+      web: 4200,
+      mobile: 4700,
+      custom: 5200,
+      ai: 5700
     };
 
-    const basePrice = basePrices[projectType] || 3000;
+    const basePrice = basePrices[projectType] || 4200;
     const featuresCost = selectedFeatures.length * 500;
     const subtotal = basePrice + featuresCost;
     
@@ -103,9 +103,9 @@ const Contact = () => {
     let totalMin = Math.round((subtotal * scaleMultiplier) / 500) * 500;
     let totalMax = Math.round((subtotal * scaleMultiplier * 1.25) / 500) * 500;
 
-    // Cap at 10000
-    if (totalMax > 10000) {
-      totalMax = 10000;
+    // Cap at 12000
+    if (totalMax > 12000) {
+      totalMax = 12000;
     }
     if (totalMin >= totalMax) {
       totalMin = totalMax - 1000;

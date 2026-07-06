@@ -48,6 +48,7 @@ const FloatingHint = ({ message, delaySeconds = 10 }) => {
       <div style={{
         background: 'rgba(0, 0, 0, 0.85)',
         backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
         border: '1px solid rgba(0, 242, 254, 0.4)',
         borderRadius: '16px',
         padding: '2rem 3rem',

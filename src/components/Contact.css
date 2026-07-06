@@ -434,20 +434,24 @@
 @media (max-width: 640px) {
   .features-checklist-grid {
     grid-template-columns: 1fr;
+    gap: 0.6rem;
   }
   
   .scale-selector-grid {
     grid-template-columns: 1fr;
+    gap: 0.6rem;
   }
 }
 
 @media (max-width: 576px) {
   .project-type-grid {
     grid-template-columns: 1fr;
+    gap: 0.6rem;
   }
   
   .inputs-grid {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
   
   .full-width-input {
@@ -456,6 +460,55 @@
   
   .estimation-metric-row {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 1rem;
+  }
+
+  .estimation-card {
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-value {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-wrapper {
+    padding: 1.5rem 1rem;
+  }
+  
+  .contact-form-container {
+    padding: 1.25rem;
+  }
+
+  .planner-progress-bar {
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .progress-step {
+    font-size: 0.65rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    opacity: 0.6;
+  }
+
+  .progress-step.active {
+    background: rgba(0, 242, 254, 0.08);
+    border-color: rgba(0, 242, 254, 0.25);
+    opacity: 1;
+  }
+
+  .progress-step-line {
+    display: none; /* Hide progress lines on small viewports to avoid wrapping text */
+  }
+
+  .back-step-btn, .next-step-btn, .submit-planner-btn {
+    padding: 0.65rem 1.15rem;
+    font-size: 0.9rem;
   }
 }

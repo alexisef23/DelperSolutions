@@ -38,20 +38,22 @@
   position: relative;
 }
 
-/* ======================================
-   EASTER EGG: ZERO GRAVITY
-   ====================================== */
 .zero-gravity {
   animation: floatZeroGravity 12s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
   pointer-events: none;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 @keyframes floatZeroGravity {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(10px, -20px) rotate(3deg) scale(1.02); }
-  50% { transform: translate(-15px, -40px) rotate(-2deg) scale(0.98); }
-  75% { transform: translate(20px, -10px) rotate(4deg) scale(1.01); }
-  100% { transform: translate(-10px, 20px) rotate(-3deg) scale(1); }
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); -webkit-transform: translate3d(0, 0, 0) rotate(0deg); }
+  25% { transform: translate3d(10px, -20px, 0) rotate(3deg) scale(1.02); -webkit-transform: translate3d(10px, -20px, 0) rotate(3deg) scale(1.02); }
+  50% { transform: translate3d(-15px, -40px, 0) rotate(-2deg) scale(0.98); -webkit-transform: translate3d(-15px, -40px, 0) rotate(-2deg) scale(0.98); }
+  75% { transform: translate3d(20px, -10px, 0) rotate(4deg) scale(1.01); -webkit-transform: translate3d(20px, -10px, 0) rotate(4deg) scale(1.01); }
+  100% { transform: translate3d(-10px, 20px, 0) rotate(-3deg) scale(1); -webkit-transform: translate3d(-10px, 20px, 0) rotate(-3deg) scale(1); }
 }
 
 /* Base Mockup Styles */
@@ -1176,5 +1178,58 @@
 
 .footer-tab.active {
   color: #2563eb;
+}
+
+@media (max-width: 768px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .portfolio-card {
+    padding: 1.25rem;
+  }
+  .portfolio-visual-container {
+    height: 180px;
+    padding: 0.75rem 0.75rem 0 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .card-mockup {
+    transform: scale(0.95);
+    transform-origin: top center;
+  }
+  .portfolio-title {
+    font-size: 1.1rem;
+  }
+  .portfolio-stat.impact {
+    padding: 0.6rem 0.85rem;
+  }
+  .stat-value {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-card {
+    padding: 1rem;
+  }
+  .portfolio-visual-container {
+    height: 160px;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .card-mockup {
+    transform: scale(0.88);
+    transform-origin: top center;
+  }
+  .portfolio-title-wrapper {
+    max-width: calc(100% - 60px);
+  }
+  .portfolio-title {
+    font-size: 1.05rem;
+  }
+  .portfolio-client {
+    font-size: 0.75rem;
+  }
 }
 
