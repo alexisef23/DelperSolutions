@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Faq.css';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 

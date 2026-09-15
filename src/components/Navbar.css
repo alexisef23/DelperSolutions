@@ -39,7 +39,7 @@
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.01em;
-  transition: color 2.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.25s ease;
 }
 
 .navbar-logo {
@@ -66,7 +66,7 @@
   text-decoration: none;
   position: relative;
   padding: 0.25rem 0;
-  transition: color 2.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.25s ease;
 }
 
 .navbar-link::after {
@@ -248,8 +248,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 8px;
-  transition: background 2.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              border-color 2.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.4s ease, 
+              border-color 0.4s ease;
 }
 
 :root[data-theme="light"] .theme-toggle-slider {

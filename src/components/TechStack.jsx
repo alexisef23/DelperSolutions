@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import './TechStack.css';
 import { Layout, Smartphone, Sparkles, Building2 } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import FloatingHint from './FloatingHint';
-
 const TechStack = () => {
   const [activeProfile, setActiveProfile] = useState(null);
   const revealRef = useScrollReveal();
@@ -79,72 +77,6 @@ const TechStack = () => {
     setActiveProfile(prev => prev === profileId ? null : profileId);
   };
 
-  const [isMatrix, setIsMatrix] = useState(false);
-  const matrixCanvasRef = useRef(null);
-  const keySequence = useRef('');
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key && e.key.length === 1) {
-        keySequence.current += e.key.toLowerCase();
-        if (keySequence.current.length > 6) {
-          keySequence.current = keySequence.current.slice(-6);
-        }
-        if (keySequence.current === 'matrix') {
-          setIsMatrix(true);
-        }
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  useEffect(() => {
-    if (!isMatrix) return;
-    const canvas = matrixCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = [];
-    for (let x = 0; x < columns; x++) drops[x] = 1;
-
-    let interval;
-    const draw = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      ctx.fillStyle = '#0F0';
-      ctx.font = fontSize + 'px monospace';
-      
-      for (let i = 0; i < drops.length; i++) {
-        const text = characters.charAt(Math.floor(Math.random() * characters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    };
-    
-    interval = setInterval(draw, 33);
-    
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('resize', resize);
-    };
-  }, [isMatrix]);
-
   const isTechHighlighted = (techName) => {
     if (!activeProfile) return true; // Default: highlight all
     const profile = profiles.find(p => p.id === activeProfile);
@@ -152,18 +84,11 @@ const TechStack = () => {
   };
 
   return (
-    <div ref={revealRef} className={`container relative ${isMatrix ? 'matrix-mode' : ''}`}>
-      {isMatrix && (
-        <canvas 
-          ref={matrixCanvasRef} 
-          style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1, opacity: 0.3, pointerEvents: 'none' }}
-        />
-      )}
+    <div ref={revealRef} className="container relative">
       <h2 className="section-title">Nuestro <span className="text-gradient">Arsenal Técnico</span></h2>
       <p className="section-subtitle">
         Tecnologías de vanguardia para arquitecturas escalables.
       </p>
-      <FloatingHint message="Teclea la palabra 'matrix' en tu teclado para ver la verdad" />
       
       {/* Architectures Recommender Profiles Selector */}
       <div className="tech-recommender-section glass-panel">

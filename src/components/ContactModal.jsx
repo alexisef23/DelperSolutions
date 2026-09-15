@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './ContactModal.css';
 import { Smartphone, Globe, Cpu, X, Sparkles } from 'lucide-react';
 

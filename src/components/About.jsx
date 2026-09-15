@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './About.css';
 import { Target, Rocket, Award, Lightbulb, Shuffle, Shield, Eye, Users, ChevronDown } from 'lucide-react';
 import ProcessTimeline from './ProcessTimeline';

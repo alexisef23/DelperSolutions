@@ -1,9 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import './Contact.css';
 import { Smartphone, Globe, Cpu, Sparkles, Check, ChevronRight, ChevronLeft, Calendar, DollarSign, Activity } from 'lucide-react';
 import Faq from './Faq';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+
+const HACKER_SCRIPT = [
+  '> Iniciando protocolo de intrusión...',
+  '> Escaneando puertos abiertos... 22, 80, 443, 3000',
+  '> Saltando firewall de capa 7...',
+  '> Inyectando payload SQL... SELECT * FROM secretos',
+  '> Descifrando hash SHA-256...',
+  '> Accediendo a la base de datos principal...',
+  '> ██████████████████████ 100%',
+  '> ⚠ ACCESO CONCEDIDO AL SISTEMA DELPER ⚠',
+  '',
+  '  ╔══════════════════════════════════════╗',
+  '  ║  🥚 ¡HAS ENCONTRADO UN EASTER EGG! ║',
+  '  ║                                      ║',
+  '  ║  Código secreto: HACKER-10           ║',
+  '  ║  Menciona este código para un 10%    ║',
+  '  ║  de descuento en tu primer proyecto  ║',
+  '  ╚══════════════════════════════════════╝',
+  '',
+  '> Presiona ESC o haz clic para cerrar...'
+];
 
 const Contact = () => {
   const [step, setStep] = useState(1);
@@ -125,36 +146,23 @@ const Contact = () => {
   const [terminalLines, setTerminalLines] = useState([]);
   const terminalRef = useRef(null);
 
-  const hackerScript = [
-    '> Iniciando protocolo de intrusión...',
-    '> Escaneando puertos abiertos... 22, 80, 443, 3000',
-    '> Saltando firewall de capa 7...',
-    '> Inyectando payload SQL... SELECT * FROM secretos',
-    '> Descifrando hash SHA-256...',
-    '> Accediendo a la base de datos principal...',
-    '> ██████████████████████ 100%',
-    '> ⚠ ACCESO CONCEDIDO AL SISTEMA DELPER ⚠',
-    '',
-    '  ╔══════════════════════════════════════╗',
-    '  ║  🥚 ¡HAS ENCONTRADO UN EASTER EGG! ║',
-    '  ║                                      ║',
-    '  ║  Código secreto: HACKER-10           ║',
-    '  ║  Menciona este código para un 10%    ║',
-    '  ║  de descuento en tu primer proyecto  ║',
-    '  ╚══════════════════════════════════════╝',
-    '',
-    '> Presiona ESC o haz clic para cerrar...'
-  ];
+  const closeHackerMode = () => {
+    setHackerMode(false);
+    setTerminalLines([]);
+  };
+
+  const openHackerMode = () => {
+    setTerminalLines([]);
+    setHackerMode(true);
+  };
 
   useEffect(() => {
-    if (!hackerMode) {
-      setTerminalLines([]);
-      return;
-    }
+    if (!hackerMode) return;
+
     let lineIndex = 0;
     const interval = setInterval(() => {
-      if (lineIndex < hackerScript.length) {
-        setTerminalLines(prev => [...prev, hackerScript[lineIndex]]);
+      if (lineIndex < HACKER_SCRIPT.length) {
+        setTerminalLines(prev => [...prev, HACKER_SCRIPT[lineIndex]]);
         lineIndex++;
         if (terminalRef.current) {
           terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
@@ -165,7 +173,7 @@ const Contact = () => {
     }, 400);
 
     const handleEscape = (e) => {
-      if (e.key === 'Escape') setHackerMode(false);
+      if (e.key === 'Escape') closeHackerMode();
     };
     window.addEventListener('keydown', handleEscape);
 
@@ -181,7 +189,7 @@ const Contact = () => {
       {hackerMode && createPortal(
         <div 
           className="hacker-overlay" 
-          onClick={() => setHackerMode(false)}
+          onClick={closeHackerMode}
           style={{
             position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
             background: 'rgba(0, 0, 0, 0.95)', zIndex: 999999, display: 'flex',
@@ -430,7 +438,7 @@ const Contact = () => {
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
         <button 
           type="button"
-          onClick={() => setHackerMode(true)}
+          onClick={openHackerMode}
           style={{
             background: 'transparent', border: '1px solid rgba(255, 51, 102, 0.3)',
             color: 'rgba(255, 51, 102, 0.5)', padding: '6px 14px', borderRadius: '4px',

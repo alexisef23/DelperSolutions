@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Hero.css';
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useMagnetic } from '../hooks/useMagnetic';
 import ParticleButton from './ParticleButton';
 
@@ -15,7 +14,7 @@ const PHRASES = [
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
 
 const DecryptText = () => {
-  const [displayText, setDisplayText] = useState("");
+  const [displayText, setDisplayText] = useState(PHRASES[0]);
   const [phraseIdx, setPhraseIdx] = useState(0);
 
   useEffect(() => {

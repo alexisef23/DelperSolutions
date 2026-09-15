@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './ProcessTimeline.css';
 import { Search, PenTool, Code2, ShieldAlert, Rocket } from 'lucide-react';
 
@@ -65,7 +65,7 @@ const ProcessTimeline = () => {
         </div>
 
         {/* Display Active Step Details */}
-        <div className="timeline-content-card glass-panel highlight-border">
+        <div key={activeStep} className="timeline-content-card glass-panel highlight-border animate-fade-in">
           <div className="step-badge">Paso 0{activeStep + 1}</div>
           <h4 className="step-content-title">{steps[activeStep].title}</h4>
           <p className="step-content-desc">{steps[activeStep].desc}</p>

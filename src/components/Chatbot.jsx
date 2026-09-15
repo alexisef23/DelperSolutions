@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './Chatbot.css';
-import { MessageCircle, X, Send, Sparkles, ArrowRight } from 'lucide-react';
+import { X, Send, Sparkles, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const BOT_NAME = 'Delper AI';

@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import './Portfolio.css';
 import Testimonials from './Testimonials';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import FloatingHint from './FloatingHint';
-import { usePhysicsEasterEgg } from '../hooks/usePhysicsEasterEgg';
 
 const CardMockup = ({ type }) => {
   switch (type) {
@@ -197,55 +195,85 @@ const CardMockup = ({ type }) => {
 };
 
 const PortfolioCard = ({ item, className }) => {
-  const [style, setStyle] = useState({});
-  const [shineStyle, setShineStyle] = useState({ opacity: 0 });
+  const cardRef = useRef(null);
+  const shineRef = useRef(null);
+  const animFrameRef = useRef(null);
+  const stateRef = useRef({
+    targetRx: 0, targetRy: 0, targetTy: 0, targetShineX: 50, targetShineY: 50, targetShineOpacity: 0,
+    currentRx: 0, currentRy: 0, currentTy: 0, currentShineX: 50, currentShineY: 50, currentShineOpacity: 0,
+    isHovered: false
+  });
+
+  const updateCardPhysics = () => {
+    const s = stateRef.current;
+    const lerp = (start, end, factor) => start + (end - start) * factor;
+
+    s.currentRx = lerp(s.currentRx, s.targetRx, 0.12);
+    s.currentRy = lerp(s.currentRy, s.targetRy, 0.12);
+    s.currentTy = lerp(s.currentTy, s.targetTy, 0.12);
+    s.currentShineX = lerp(s.currentShineX, s.targetShineX, 0.15);
+    s.currentShineY = lerp(s.currentShineY, s.targetShineY, 0.15);
+    s.currentShineOpacity = lerp(s.currentShineOpacity, s.targetShineOpacity, 0.12);
+
+    if (cardRef.current) {
+      cardRef.current.style.transform = `perspective(1000px) rotateX(${s.currentRx.toFixed(2)}deg) rotateY(${s.currentRy.toFixed(2)}deg) translateY(${s.currentTy.toFixed(2)}px)`;
+      cardRef.current.style.boxShadow = s.isHovered
+        ? '0 22px 50px rgba(0, 242, 254, 0.14), 0 0 35px rgba(178, 36, 239, 0.08)'
+        : '';
+    }
+
+    if (shineRef.current) {
+      shineRef.current.style.background = `radial-gradient(circle at ${s.currentShineX.toFixed(1)}% ${s.currentShineY.toFixed(1)}%, rgba(255, 255, 255, 0.09) 0%, transparent 60%)`;
+      shineRef.current.style.opacity = s.currentShineOpacity.toFixed(3);
+    }
+
+    if (s.isHovered || Math.abs(s.currentRx - s.targetRx) > 0.01 || Math.abs(s.currentRy - s.targetRy) > 0.01 || Math.abs(s.currentShineOpacity - s.targetShineOpacity) > 0.01) {
+      animFrameRef.current = requestAnimationFrame(updateCardPhysics);
+    }
+  };
 
   const handleMouseMove = (e) => {
-    if (document.body.classList.contains('physics-active')) return;
-    const rect = e.currentTarget.getBoundingClientRect();
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const xc = rect.width / 2;
     const yc = rect.height / 2;
-    const dx = x - xc;
-    const dy = y - yc;
-    const rx = -(dy / yc) * 8; // tilt max 8 degrees
-    const ry = (dx / xc) * 8;
 
-    setStyle({
-      transform: `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`,
-      transition: 'transform 0.08s ease, box-shadow 0.08s ease',
-      boxShadow: '0 20px 45px rgba(0, 242, 254, 0.12), 0 0 30px rgba(178, 36, 239, 0.06)'
-    });
+    const s = stateRef.current;
+    s.targetRx = -((y - yc) / yc) * 7.5;
+    s.targetRy = ((x - xc) / xc) * 7.5;
+    s.targetTy = -6;
+    s.targetShineX = (x / rect.width) * 100;
+    s.targetShineY = (y / rect.height) * 100;
+    s.targetShineOpacity = 1;
 
-    const px = (x / rect.width) * 100;
-    const py = (y / rect.height) * 100;
-    setShineStyle({
-      background: `radial-gradient(circle at ${px}% ${py}%, rgba(255, 255, 255, 0.08) 0%, transparent 60%)`,
-      opacity: 1
-    });
+    if (!s.isHovered) {
+      s.isHovered = true;
+      cancelAnimationFrame(animFrameRef.current);
+      animFrameRef.current = requestAnimationFrame(updateCardPhysics);
+    }
   };
 
   const handleMouseLeave = () => {
-    if (document.body.classList.contains('physics-active')) return;
-    setStyle({
-      transform: '',
-      transition: 'transform 0.5s ease, box-shadow 0.5s ease'
-    });
-    setShineStyle({
-      opacity: 0,
-      transition: 'opacity 0.5s ease'
-    });
+    const s = stateRef.current;
+    s.isHovered = false;
+    s.targetRx = 0;
+    s.targetRy = 0;
+    s.targetTy = 0;
+    s.targetShineOpacity = 0;
+    cancelAnimationFrame(animFrameRef.current);
+    animFrameRef.current = requestAnimationFrame(updateCardPhysics);
   };
 
   return (
     <div 
+      ref={cardRef}
       className={`portfolio-card glass-panel relative-card ${className || ''}`} 
-      style={style}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="shine-overlay" style={shineStyle} />
+      <div ref={shineRef} className="shine-overlay" style={{ opacity: 0 }} />
       <div className="portfolio-visual-container">
         <CardMockup type={item.type} />
       </div>
@@ -284,23 +312,6 @@ const PortfolioCard = ({ item, className }) => {
 
 const Portfolio = () => {
   const revealRef = useScrollReveal();
-  const [clickCount, setClickCount] = useState(0);
-  const { activatePhysics, isActive: isPhysicsActive } = usePhysicsEasterEgg();
-
-  const handleTitleClick = () => {
-    if (isPhysicsActive) return;
-    setClickCount(prev => prev + 1);
-    clearTimeout(clickTimeout.current);
-    clickTimeout.current = setTimeout(() => {
-      setClickCount(0);
-    }, 1000); // 1 second to click 3 times
-  };
-
-  useEffect(() => {
-    if (clickCount >= 3) {
-      activatePhysics();
-    }
-  }, [clickCount, activatePhysics]);
 
   const cases = [
     {
@@ -361,24 +372,18 @@ const Portfolio = () => {
 
   return (
     <div ref={revealRef} className="container animate-fade-in">
-      <h2 
-        className="section-title" 
-        onClick={handleTitleClick} 
-        style={{ cursor: 'pointer', userSelect: 'none' }}
-      >
+      <h2 className="section-title">
         Casos de <span className="text-gradient">Éxito</span>
       </h2>
       <p className="section-subtitle">
         El corazón de nuestra ingeniería: soluciones probadas con impacto real.
       </p>
-      <FloatingHint message='Haz clic rápido 3 veces en el título "Casos de Éxito" para colapsar la gravedad' />
       
       <div className="portfolio-grid">
         {cases.map((item, index) => (
           <PortfolioCard 
             key={index} 
             item={item} 
-            className="physics-body"
           />
         ))}
       </div>

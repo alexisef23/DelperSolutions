@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -12,7 +12,6 @@ import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import Loader from './components/Loader';
 import MouseParticles from './components/MouseParticles';
-import AsteroidsGame from './components/AsteroidsGame';
 
 // Scroll manager to scroll back to top on route change
 function ScrollToTop() {
@@ -85,7 +84,6 @@ function AppContent({ theme, toggleTheme }) {
           <Route path="/servicios" element={
             <div className="section-servicios page-container">
               <Services />
-              <AsteroidsGame />
             </div>
           } />
           <Route path="/quienes-somos" element={

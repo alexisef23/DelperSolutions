@@ -97,12 +97,14 @@
 /* Accordion Smooth Height Transition */
 .faq-answer-wrapper {
   max-height: 0;
+  opacity: 0;
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
 }
 
 .faq-item.open .faq-answer-wrapper {
   max-height: 200px; /* Big enough for text */
+  opacity: 1;
 }
 
 .faq-answer-content {

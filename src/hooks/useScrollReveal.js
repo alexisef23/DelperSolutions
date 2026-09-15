@@ -7,16 +7,21 @@ export const useScrollReveal = () => {
     const el = ref.current;
     if (!el) return;
 
+    // Immediately reveal on mount to prevent content from staying hidden/stuck
+    requestAnimationFrame(() => {
+      if (el) el.classList.add('revealed');
+    });
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('revealed');
-          observer.unobserve(entry.target); // Reveal only once
+          observer.unobserve(entry.target);
         }
       });
     }, {
-      threshold: 0.1, // Trigger when 10% visible
-      rootMargin: '0px 0px -50px 0px' // Offset
+      threshold: 0.01,
+      rootMargin: '50px'
     });
 
     el.classList.add('reveal-on-scroll');

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const ParticleButton = ({ to, className, children, onClick }) => {
@@ -13,8 +13,7 @@ const ParticleButton = ({ to, className, children, onClick }) => {
     const particle = document.createElement('div');
     document.body.appendChild(particle);
 
-    // Partículas más grandes
-    const size = Math.random() * (isExplosion ? 10 : 6) + 4;
+    const size = Math.random() * (isExplosion ? 8 : 5) + 3;
     const color = colors[Math.floor(Math.random() * colors.length)];
 
     particle.style.position = 'fixed';
@@ -28,20 +27,18 @@ const ParticleButton = ({ to, className, children, onClick }) => {
     particle.style.zIndex = '99999';
     particle.style.opacity = '1';
     
-    const duration = isExplosion ? 1.2 : 1.5;
+    const duration = isExplosion ? 1.0 : 1.2;
     particle.style.transition = `transform ${duration}s cubic-bezier(0.1, 1, 0.2, 1), opacity ${duration}s ease-out`;
 
-    void particle.offsetWidth;
-
     const angle = Math.random() * Math.PI * 2;
-    // Distancia exponencial (algunas muy lejos, otras cerca)
-    const distance = isExplosion ? (Math.pow(Math.random(), 2) * 200 + 60) : (Math.random() * 30 + 15);
-    
+    const distance = isExplosion ? (Math.pow(Math.random(), 2) * 160 + 50) : (Math.random() * 25 + 10);
     const tx = Math.cos(angle) * distance;
-    const ty = isExplosion ? (Math.sin(angle) * distance) : -(Math.random() * 50 + 20);
+    const ty = isExplosion ? (Math.sin(angle) * distance) : -(Math.random() * 40 + 15);
 
-    particle.style.transform = `translate(${tx}px, ${ty}px) scale(0)`;
-    particle.style.opacity = '0';
+    requestAnimationFrame(() => {
+      particle.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(0)`;
+      particle.style.opacity = '0';
+    });
 
     setTimeout(() => {
       if (particle.parentNode) particle.parentNode.removeChild(particle);
@@ -50,14 +47,14 @@ const ParticleButton = ({ to, className, children, onClick }) => {
 
   const handleMouseEnter = () => {
     if (!buttonRef.current || isExploded) return;
+    clearInterval(hoverIntervalRef.current);
     hoverIntervalRef.current = setInterval(() => {
+      if (!buttonRef.current) return;
       const rect = buttonRef.current.getBoundingClientRect();
-      for (let i = 0; i < 3; i++) {
-        const x = rect.left + Math.random() * rect.width;
-        const y = rect.top + Math.random() * rect.height;
-        createParticle(x, y, false);
-      }
-    }, 60);
+      const x = rect.left + Math.random() * rect.width;
+      const y = rect.top + Math.random() * rect.height;
+      createParticle(x, y, false);
+    }, 90);
   };
 
   const handleMouseLeave = () => {
@@ -78,8 +75,7 @@ const ParticleButton = ({ to, className, children, onClick }) => {
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
-      // Más partículas para la explosión
-      for (let i = 0; i < 80; i++) {
+      for (let i = 0; i < 40; i++) {
         createParticle(centerX, centerY, true);
       }
     }
@@ -90,13 +86,17 @@ const ParticleButton = ({ to, className, children, onClick }) => {
       e.preventDefault();
       setTimeout(() => {
         navigate(to);
-      }, 500); // 500ms delay para ver la explosión
+        setIsExploded(false);
+      }, 400);
     }
   };
 
   useEffect(() => {
-    return () => clearInterval(hoverIntervalRef.current);
-  }, []);
+    return () => {
+      clearInterval(hoverIntervalRef.current);
+      setIsExploded(false);
+    };
+  }, [to]);
 
   const commonProps = {
     ref: buttonRef,

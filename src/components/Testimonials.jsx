@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import './Testimonials.css';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
@@ -41,23 +41,23 @@ const Testimonials = () => {
     }
   ];
 
-  const startAutoplay = () => {
-    stopAutoplay();
-    autoplayRef.current = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    }, 5000); // Change slide every 5 seconds
-  };
-
-  const stopAutoplay = () => {
+  const stopAutoplay = useCallback(() => {
     if (autoplayRef.current) {
       clearInterval(autoplayRef.current);
     }
-  };
+  }, []);
+
+  const startAutoplay = useCallback(() => {
+    stopAutoplay();
+    autoplayRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+  }, [testimonials.length, stopAutoplay]);
 
   useEffect(() => {
     startAutoplay();
     return () => stopAutoplay();
-  }, []);
+  }, [startAutoplay, stopAutoplay]);
 
   const handlePrev = () => {
     stopAutoplay();

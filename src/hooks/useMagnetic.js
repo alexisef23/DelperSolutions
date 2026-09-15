@@ -13,11 +13,13 @@ export const useMagnetic = (strength = 0.3) => {
       const x = clientX - (left + width / 2);
       const y = clientY - (top + height / 2);
 
-      el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      el.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)';
+      el.style.transform = `translate3d(${x * strength}px, ${y * strength}px, 0)`;
     };
 
     const handleMouseLeave = () => {
-      el.style.transform = '';
+      el.style.transition = 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      el.style.transform = 'translate3d(0, 0, 0)';
     };
 
     el.addEventListener('mousemove', handleMouseMove);

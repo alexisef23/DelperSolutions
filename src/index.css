@@ -90,13 +90,11 @@ body {
   overflow-x: hidden;
 }
 
-/* Smooth, slow theme switching transition */
-body, section, .glass-panel, .input-field, .btn, .tech-item, .tech-category, .service-card, .portfolio-card, .navbar, .contact-form-container, .footer, .theme-toggle-slider, .planner-card, .selector-pill, .eco-card, .eco-card-bar, .eco-card-body, .eco-hub-inner, .eco-code-bar, .eco-code-body, .eco-status, .eco-mobile, .hero-floating-badge, .eco-orbit, .eco-hub-pulse {
-  transition: background-color 2.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              background 2.3s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 2.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              color 2.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 2.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Smooth theme switching transition for containers */
+body, main, section, .navbar, .footer {
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              background 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -230,9 +228,9 @@ h1, h2, h3, h4, h5, h6 {
 /* ======================================
    MULTI-PAGE LAYOUT
    ====================================== */
-html {
-  scroll-behavior: smooth;
-  height: 100%;
+html, body {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .app-container {
@@ -240,7 +238,6 @@ html {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
   z-index: 1;
 }
 
@@ -284,18 +281,12 @@ html {
 .glow-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.15;
-  mix-blend-mode: screen;
+  filter: blur(70px);
+  opacity: 0.18;
   pointer-events: none;
   animation: orb-drift 20s infinite alternate ease-in-out;
   will-change: transform;
   transform: translate3d(0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  perspective: 1000;
 }
 
 .orb-1 {
@@ -398,13 +389,32 @@ html {
 /* Scroll Reveal classes */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(0, 24px, 0);
+  will-change: opacity, transform;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-on-scroll.revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Mobile & Touch Devices High-Speed Optimization */
+@media (max-width: 768px), (hover: none) {
+  html, body {
+    -webkit-overflow-scrolling: touch;
+    touch-action: manipulation;
+  }
+  
+  .glass-panel {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .glow-orb {
+    filter: blur(45px);
+    opacity: 0.12;
+  }
 }
 
